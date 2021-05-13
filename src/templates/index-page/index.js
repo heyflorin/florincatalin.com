@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { graphql, Link as GatsbyLink } from 'gatsby'
 import { motion } from 'framer-motion'
@@ -15,6 +15,8 @@ import RecentArticles from '../../components/RecentArticles'
 import Experiments from '../../components/Experiments'
 import init from '../../home-animation'
 import { shouldAnimate } from '../../helpers'
+import ThemeContext from '../../context/theme'
+
 import {
   Canvas,
   ExperimentsWrap,
@@ -28,13 +30,15 @@ import {
 import HomeIllustrationSrc from '../../img/home-illustration.png'
 
 export const IndexPageTemplate = ({ title, description, experiments }) => {
+  const { themeName } = useContext(ThemeContext)
+  const prevThemeName = useRef()
   const canvasRef = useRef(0)
 
   useEffect(() => {
     let destroy
 
     if (canvasRef.current) {
-      destroy = init(canvasRef.current)
+      destroy = init(null, canvasRef.current)
     }
 
     return () => {
@@ -42,28 +46,37 @@ export const IndexPageTemplate = ({ title, description, experiments }) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (prevThemeName.current !== themeName) {
+      console.log('prevThemeName.current', prevThemeName.current)
+      console.log('themeName', themeName)
+      console.log('canvasRef.current', canvasRef.current.children)
+    }
+    prevThemeName.current = themeName
+  }, [themeName])
+
   return (
     <>
       <Seo />
       <HeaderWrap aria-labelledby="introduction-label">
+        {shouldAnimate() && (
+          <Canvas
+            ref={canvasRef}
+            initial={{ opacity: 0, scale: 1, y: '-50%' }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: 'spring', stiffness: 50, mass: 0.2 }}
+            role="presentation"
+          />
+        )}
+        <noscript>
+          <HomeIllustration
+            src={HomeIllustrationSrc}
+            alt=""
+            role="presentation"
+          />
+        </noscript>
         <HomeContentWrap>
           <HeaderContentWrap>
-            {shouldAnimate() && (
-              <Canvas
-                ref={canvasRef}
-                initial={{ opacity: 0, scale: 0.75, y: '-50%' }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ type: 'spring', stiffness: 50, mass: 0.2 }}
-                role="presentation"
-              />
-            )}
-            <noscript>
-              <HomeIllustration
-                src={HomeIllustrationSrc}
-                alt=""
-                role="presentation"
-              />
-            </noscript>
             <HeaderTextWrap>
               <motion.div
                 initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}

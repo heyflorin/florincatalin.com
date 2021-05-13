@@ -36,27 +36,21 @@ export const HomeContentWrap = styled(ContentWrap)`
 
 export const Canvas = styled(motion.canvas)`
   position: absolute;
-  top: calc(50% - 2rem);
-  right: -40%;
-  width: 100vw;
-  max-width: 50rem;
-  height: 100vw;
-  max-height: 50rem;
-  opacity: 0.75;
+  top: calc(50% + 5vh);
+  right: auto;
+  background: var(--gradientSky);
+  filter: var(--isDark);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     opacity: 1;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    left: auto;
-    right: -12.5%;
-    width: 60vw;
-    height: 60vw;
+    right: auto;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktopLarge}) {
-    right: 0;
+    right: auto;
   }
 `
 
