@@ -45,6 +45,8 @@ export const lightValues = css`
   --illustrationLineShade1: hsl(240, 14%, 89%);
   --illustrationLineShade2: hsl(240, 14%, 85%);
   --illustrationLineShade3: hsl(240, 14%, 80%);
+  --gradientSky: linear-gradient(var(--backgroundPrimary), #fae3be);
+  --isDark: '';
 `
 
 export const darkValues = css`
@@ -87,4 +89,6 @@ export const darkValues = css`
   --illustrationLineShade1: hsl(240, 3%, 12%);
   --illustrationLineShade2: hsl(240, 5%, 15%);
   --illustrationLineShade3: hsl(240, 7%, 19%);
+  --gradientSky: linear-gradient(var(--backgroundPrimary), #766c5c);
+  --isDark: hue-rotate(-10deg) opacity(100%) brightness(0.4);
 `
