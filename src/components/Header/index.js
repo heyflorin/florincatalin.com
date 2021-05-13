@@ -19,7 +19,7 @@ const Header = ({ location, shell }) => (
       <ContentWrap>
         <HeaderContentWrap>
           <SiteTitle level={4} element="span">
-            <HomePageLink to="/about" aria-label="About Florin" rel="about">
+            <HomePageLink to="/" aria-label="Home" rel="home">
               <Spaced right="xs">
                 <Icon>{`😬`}</Icon>
               </Spaced>
