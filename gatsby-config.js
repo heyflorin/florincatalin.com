@@ -159,7 +159,7 @@ module.exports = {
               }
             `,
             output: '/rss.xml',
-            title: 'Jonathan Harrell RSS Feed'
+            title: 'Florin Catalin RSS Feed'
           }
         ]
       }
