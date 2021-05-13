@@ -21,9 +21,9 @@ const Header = ({ location, shell }) => (
           <SiteTitle level={4} element="span">
             <HomePageLink to="/" aria-label="Home page" rel="home">
               <Spaced right="xs">
-                <Icon>{`</>`}</Icon>
+                <Icon>{`😬`}</Icon>
               </Spaced>
-              Jonathan Harrell
+              Florin Catalin
             </HomePageLink>
           </SiteTitle>
           {!shell && <MobileMenu location={location} />}

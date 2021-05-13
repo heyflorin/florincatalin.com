@@ -5,10 +5,9 @@ module.exports = {
   extends: [
     'react-app',
     'plugin:prettier/recommended',
-    'plugin:jsx-a11y/recommended'
+    'plugin:jsx-a11y/recommended',
+    'plugin:babel-eslint/recommended'
   ],
-  plugins: [
-    'jsx-a11y'
-  ],
+  plugins: ['jsx-a11y', 'babel-eslint'],
   rules: {}
 }
