@@ -108,19 +108,13 @@ const DesktopMenu = ({ location, shell }) => {
             <nav role="navigation">
               <ul>
                 <Spaced right="xxl">
+                  <MenuLinkWrap></MenuLinkWrap>
                   <MenuLinkWrap>
-                    <MenuLink to="/" rel="home" getProps={isActive}>
-                      <MenuLinkText order="body" element="span">
-                        Home
-                      </MenuLinkText>
-                    </MenuLink>
-                  </MenuLinkWrap>
-                  <MenuLinkWrap>
-                    <MenuLink to="/blog" getProps={isActive}>
+                    {/* <MenuLink to="/blog" getProps={isActive}>
                       <MenuLinkText order="body" element="span">
                         Articles
                       </MenuLinkText>
-                    </MenuLink>
+                    </MenuLink> */}
                   </MenuLinkWrap>
                   <MenuLinkWrap>
                     <MenuLink to="/about" getProps={isActive}>
@@ -145,9 +139,9 @@ const DesktopMenu = ({ location, shell }) => {
           <ScreenReaderText>
             <h3 id="site-tools-label">Site Tools</h3>
           </ScreenReaderText>
-          <Spaced left="xl">
+          {/* <Spaced left="xl">
             <SearchModal location={location} />
-          </Spaced>
+          </Spaced> */}
           <Spaced left="xl">
             <ThemeToggleButton
               unstyled
@@ -175,7 +169,7 @@ const DesktopMenu = ({ location, shell }) => {
               href="#subscribe"
               onClick={handleSubscribeClick}
             >
-              Subscribe
+              Contact
             </SubscribeButton>
           </Spaced>
         </SiteTools>
