@@ -34,7 +34,7 @@ function createScene(canvas) {
   scene = new THREE.Scene()
 
   // Add FOV Fog effect to the scene. Same colour as the BG int he stylesheet.
-  scene.fog = new THREE.Fog(0xf7d9aa, 100, 850)
+  scene.fog = new THREE.Fog(0xfdf0de, 200, 700)
 
   // Create the camera
   aspectRatio = WIDTH / HEIGHT

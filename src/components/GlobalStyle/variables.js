@@ -45,7 +45,7 @@ export const lightValues = css`
   --illustrationLineShade1: hsl(240, 14%, 89%);
   --illustrationLineShade2: hsl(240, 14%, 85%);
   --illustrationLineShade3: hsl(240, 14%, 80%);
-  --gradientSky: linear-gradient(var(--backgroundPrimary), #fae3be);
+  --gradientSky: linear-gradient(var(--backgroundPrimary), #fdefd9);
   --isDark: '';
 `
 
