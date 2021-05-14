@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { graphql, Link as GatsbyLink } from 'gatsby'
 import { motion } from 'framer-motion'
@@ -13,7 +13,7 @@ import Seo from '../../components/seo'
 import PageTitle from '../../components/PageTitle'
 import RecentArticles from '../../components/RecentArticles'
 import Experiments from '../../components/Experiments'
-import init from '../../home-animation'
+import HeaderScene from '../../home-animation'
 import { shouldAnimate } from '../../helpers'
 import ThemeContext from '../../context/theme'
 
@@ -32,25 +32,22 @@ import HomeIllustrationSrc from '../../img/home-illustration.png'
 export const IndexPageTemplate = ({ title, description, experiments }) => {
   const { themeName } = useContext(ThemeContext)
   const prevThemeName = useRef()
-  const canvasRef = useRef(0)
+  const canvasRef = useRef()
+  const headerScene = useRef()
 
   useEffect(() => {
-    let destroy
-
-    if (canvasRef.current) {
-      destroy = init(null, canvasRef.current)
+    if (!prevThemeName.current) {
+      headerScene.current = new HeaderScene(canvasRef)
+      headerScene.current.init(themeName)
     }
-
     return () => {
-      if (destroy) destroy()
+      headerScene.current.cleanup()
     }
   }, [])
 
   useEffect(() => {
-    if (prevThemeName.current !== themeName) {
-      console.log('prevThemeName.current', prevThemeName.current)
-      console.log('themeName', themeName)
-      console.log('canvasRef.current', canvasRef.current.children)
+    if (prevThemeName.current != themeName) {
+      headerScene.current.updateFog(themeName)
     }
     prevThemeName.current = themeName
   }, [themeName])

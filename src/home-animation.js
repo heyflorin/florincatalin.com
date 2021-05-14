@@ -1,123 +1,270 @@
 import * as THREE from 'three-js/three'
 
-var Colors = {
-  red: 0xf25346,
-  yellow: 0xedeb27,
-  white: 0xd8d0d1,
-  brown: 0x59332e,
-  pink: 0xf5986e,
-  brownDark: 0x23190f,
-  blue: 0x68c3c0,
-  green: 0x458248,
-  purple: 0x551a8b,
-  lightgreen: 0x629265
-}
+export default class HeaderScene {
+  constructor(canvas) {
+    this.canvas = canvas
+    this.colors = {
+      red: 0xf25346,
+      yellow: 0xedeb27,
+      white: 0xd8d0d1,
+      brown: 0x59332e,
+      pink: 0xf5986e,
+      brownDark: 0x23190f,
+      blue: 0x68c3c0,
+      green: 0x458248,
+      purple: 0x551a8b,
+      lightgreen: 0x629265
+    }
+    this.mousePos = { x: 8, y: 0 }
+    this.offSet = -600
+  }
 
-var scene,
-  camera,
-  fieldOfView,
-  aspectRatio,
-  nearPlane,
-  farPlane,
-  HEIGHT,
-  WIDTH,
-  renderer
+  init = theme => {
+    try {
+      this.createScene(this.canvas.current, theme)
+      this.createLights()
+      this.createPlane()
+      this.createOrbit()
+      this.createSun()
+      this.createLand()
+      this.createForest()
+      this.createSky()
+      window.addEventListener('mousemove', this.handleMouseMove, false)
+      // window.addEventListener('load', this.init, false)
 
-function createScene(canvas) {
-  // Get the width and height of the screen
-  // and use them to setup the aspect ratio
-  // of the camera and the size of the renderer.
-  HEIGHT = window.innerHeight
-  WIDTH = window.innerWidth
+      this.loop()
+    } catch (error) {
+      console.log('Scene create error', error)
+    }
+  }
 
-  // Create the scene.
-  scene = new THREE.Scene()
+  updateFog = theme => {
+    if (theme === 'light') {
+      this.scene.fog = new THREE.Fog(0xfdf0de, 200, 600)
+    } else {
+      this.scene.fog = new THREE.Fog(0x656059, 200, 600)
+    }
+  }
 
-  // Add FOV Fog effect to the scene. Same colour as the BG int he stylesheet.
-  scene.fog = new THREE.Fog(0xfdf0de, 200, 700)
+  createScene = (canvas, theme) => {
+    // Get the width and height of the screen
+    // and use them to setup the aspect ratio
+    // of the camera and the size of the renderer.
+    this.HEIGHT = window.innerHeight
+    this.WIDTH = window.innerWidth
 
-  // Create the camera
-  aspectRatio = WIDTH / HEIGHT
-  fieldOfView = 60
-  nearPlane = 1
-  farPlane = 10000
-  camera = new THREE.PerspectiveCamera(
-    fieldOfView,
-    aspectRatio,
-    nearPlane,
-    farPlane
-  )
-  // Position the camera
-  camera.position.x = 0
-  camera.position.y = 150
-  camera.position.z = 100
+    // Create the scene.
+    this.scene = new THREE.Scene()
 
-  // Create the renderer
+    // Add FOV Fog effect to the scene. Same colour as the BG int he stylesheet.
+    this.updateFog(theme)
+    // Create the camera
+    this.aspectRatio = this.WIDTH / this.HEIGHT
+    this.fieldOfView = 60
+    this.nearPlane = 1
+    this.farPlane = 10000
+    this.camera = new THREE.PerspectiveCamera(
+      this.fieldOfView,
+      this.aspectRatio,
+      this.nearPlane,
+      this.farPlane
+    )
+    // Position the camera
+    this.camera.position.x = 0
+    this.camera.position.y = 150
+    this.camera.position.z = 100
 
-  renderer = new THREE.WebGLRenderer({
-    canvas,
-    // Alpha makes the background transparent, antialias is performant heavy
-    alpha: true,
-    antialias: true
-  })
+    // Create the renderer
 
-  //set the size of the renderer to fullscreen
-  renderer.setSize(WIDTH, HEIGHT)
-  //enable shadow rendering
-  renderer.shadowMap.enabled = true
+    this.renderer = new THREE.WebGLRenderer({
+      canvas,
+      // Alpha makes the background transparent, antialias is performant heavy
+      alpha: true,
+      antialias: true
+    })
 
-  //RESPONSIVE LISTENER
-  window.addEventListener('resize', handleWindowResize, false)
-}
+    //set the size of the renderer to fullscreen
+    this.renderer.setSize(this.WIDTH, this.HEIGHT)
+    //enable shadow rendering
+    this.renderer.shadowMap.enabled = true
 
-//RESPONSIVE FUNCTION
-function handleWindowResize() {
-  HEIGHT = window.innerHeight
-  WIDTH = window.innerWidth
-  if (HEIGHT > 558) {
-    renderer.setSize(WIDTH, HEIGHT)
-    camera.aspect = WIDTH / HEIGHT
-    camera.updateProjectionMatrix()
+    //RESPONSIVE LISTENER
+    window.addEventListener('resize', this.handleWindowResize, false)
+  }
+
+  //RESPONSIVE FUNCTION
+  handleWindowResize = () => {
+    this.HEIGHT = window.innerHeight
+    this.WIDTH = window.innerWidth
+    if (this.HEIGHT > 558) {
+      this.renderer.setSize(this.WIDTH, this.HEIGHT)
+      this.camera.aspect = this.WIDTH / this.HEIGHT
+      this.camera.updateProjectionMatrix()
+    }
+  }
+
+  createLights = () => {
+    // Gradient coloured light - Sky, Ground, Intensity
+    this.hemisphereLight = new THREE.HemisphereLight(0xf7d9aa, 0x000000, 0.8)
+    // Parallel rays
+    this.shadowLight = new THREE.DirectionalLight(0xf7d9aa, 0.9)
+
+    this.shadowLight.position.set(0, 350, 350)
+    this.shadowLight.castShadow = true
+
+    // define the visible area of the projected shadow
+    this.shadowLight.shadow.camera.left = -650
+    this.shadowLight.shadow.camera.right = 650
+    this.shadowLight.shadow.camera.top = 650
+    this.shadowLight.shadow.camera.bottom = -650
+    this.shadowLight.shadow.camera.near = 1
+    this.shadowLight.shadow.camera.far = 1000
+
+    // Shadow map size
+    this.shadowLight.shadow.mapSize.width = 2048
+    this.shadowLight.shadow.mapSize.height = 2048
+
+    // Add the lights to the scene
+    this.scene.add(this.hemisphereLight)
+
+    this.scene.add(this.shadowLight)
+  }
+
+  animate = () => {}
+
+  createSky = () => {
+    this.sky = new Sky(this.colors)
+    this.sky.mesh.position.y = this.offSet
+    this.scene.add(this.sky.mesh)
+  }
+
+  createLand = () => {
+    this.land = new Land(this.colors)
+    this.land.mesh.position.y = this.offSet
+    this.scene.add(this.land.mesh)
+  }
+
+  createOrbit = () => {
+    this.orbit = new Orbit(this.colors)
+    this.orbit.mesh.position.y = this.offSet
+    this.orbit.mesh.rotation.z = -Math.PI / 6
+    this.scene.add(this.orbit.mesh)
+  }
+
+  createForest = () => {
+    this.forest = new Forest(this.colors)
+    this.forest.mesh.position.y = this.offSet
+    this.scene.add(this.forest.mesh)
+  }
+
+  createSun = () => {
+    this.sun = new Sun(this.colors)
+    this.sun.mesh.scale.set(0.55, 0.55, 0.3)
+    this.sun.mesh.position.set(0, -20, -850)
+    this.scene.add(this.sun.mesh)
+  }
+
+  createPlane = () => {
+    this.airplane = new AirPlane(this.colors)
+    this.airplane.mesh.scale.set(0.35, 0.35, 0.35)
+    this.airplane.mesh.position.set(-10, 110, -240)
+    // this.airplane.mesh.rotation.z = Math.PI/15;
+    this.scene.add(this.airplane.mesh)
+  }
+
+  updatePlane = () => {
+    var targetY = this.normalize(this.mousePos.y, -0.75, 0.75, 50, 190)
+    var targetX = this.normalize(this.mousePos.x, -0.75, 0.75, -100, -20)
+
+    // Move the plane at each frame by adding a fraction of the remaining distance
+    this.airplane.mesh.position.y +=
+      (targetY - this.airplane.mesh.position.y) * 0.1
+
+    this.airplane.mesh.position.x +=
+      (targetX - this.airplane.mesh.position.x) * 0.1 + 8
+
+    // Rotate the plane proportionally to the remaining distance
+    this.airplane.mesh.rotation.z =
+      (targetY - this.airplane.mesh.position.y) * 0.0128
+    this.airplane.mesh.rotation.x =
+      (this.airplane.mesh.position.y - targetY) * 0.0064
+    this.airplane.mesh.rotation.y =
+      (this.airplane.mesh.position.x - targetX) * 0.0064
+
+    this.airplane.propeller.rotation.x += 0.3
+  }
+
+  normalize = (v, vmin, vmax, tmin, tmax) => {
+    var nv = Math.max(Math.min(v, vmax), vmin)
+    var dv = vmax - vmin
+    var pc = (nv - vmin) / dv
+    var dt = tmax - tmin
+    var tv = tmin + pc * dt
+    return tv
+  }
+
+  loop = () => {
+    if (this.renderer) {
+      this.land.mesh.rotation.z += 0.002
+      this.orbit.mesh.rotation.z += 0.001
+      this.sky.mesh.rotation.z += 0.001
+      this.forest.mesh.rotation.z += 0.002
+      this.updatePlane()
+
+      this.renderer.render(this.scene, this.camera)
+      requestAnimationFrame(this.loop)
+    }
+  }
+
+  handleMouseMove = event => {
+    var tx = -1 + (event.clientX / this.WIDTH) * 2
+    var ty = 1 - (event.clientY / this.HEIGHT) * 2
+    this.mousePos = { x: tx, y: ty }
+  }
+
+  cleanup = () => {
+    this.renderer = null
+    this.scene.traverse(object => {
+      if (!object.isMesh) return
+
+      console.log('dispose geometry!')
+      object.geometry.dispose()
+
+      if (object.material.isMaterial) {
+        cleanMaterial(object.material)
+      } else {
+        // an array of materials
+        for (const material of object.material) cleanMaterial(material)
+      }
+    })
+
+    const cleanMaterial = material => {
+      console.log('dispose material!')
+      material.dispose()
+
+      // dispose textures
+      for (const key of Object.keys(material)) {
+        const value = material[key]
+        if (value && typeof value === 'object' && 'minFilter' in value) {
+          console.log('dispose texture!')
+          value.dispose()
+        }
+      }
+    }
+    window.removeEventListener('mousemove', this.handleMouseMove)
+    // window.removeEventListener('load', this.init)
+    window.removeEventListener('resize', this.handleWindowResize)
   }
 }
-
-var hemisphereLight, shadowLight
-
-function createLights() {
-  // Gradient coloured light - Sky, Ground, Intensity
-  hemisphereLight = new THREE.HemisphereLight(0xf7d9aa, 0x000000, 0.8)
-  // Parallel rays
-  shadowLight = new THREE.DirectionalLight(0xf7d9aa, 0.9)
-
-  shadowLight.position.set(0, 350, 350)
-  shadowLight.castShadow = true
-
-  // define the visible area of the projected shadow
-  shadowLight.shadow.camera.left = -650
-  shadowLight.shadow.camera.right = 650
-  shadowLight.shadow.camera.top = 650
-  shadowLight.shadow.camera.bottom = -650
-  shadowLight.shadow.camera.near = 1
-  shadowLight.shadow.camera.far = 1000
-
-  // Shadow map size
-  shadowLight.shadow.mapSize.width = 2048
-  shadowLight.shadow.mapSize.height = 2048
-
-  // Add the lights to the scene
-  scene.add(hemisphereLight)
-
-  scene.add(shadowLight)
-}
-
 class Land {
-  constructor() {
+  constructor(colors) {
+    this.colors = colors
     var geom = new THREE.CylinderGeometry(600, 600, 1700, 40, 10)
     //rotate on the x axis
     geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2))
     //create a material
     var mat = new THREE.MeshPhongMaterial({
-      color: Colors.lightgreen,
+      color: this.colors.lightgreen,
       shading: THREE.FlatShading
     })
 
@@ -133,17 +280,18 @@ class Orbit {
     var geom = new THREE.Object3D()
 
     this.mesh = geom
-    // this.mesh.add(sun)
+    // this.mesh.add(this.sun)
   }
 }
 
 class Sun {
-  constructor() {
+  constructor(colors) {
+    this.colors = colors
     this.mesh = new THREE.Object3D()
 
     var sunGeom = new THREE.SphereGeometry(400, 20, 15)
     var sunMat = new THREE.MeshPhongMaterial({
-      color: Colors.yellow,
+      color: this.colors.yellow,
       shading: THREE.FlatShading
     })
     var sun = new THREE.Mesh(sunGeom, sunMat)
@@ -155,13 +303,14 @@ class Sun {
 }
 
 class Cloud {
-  constructor() {
+  constructor(colors) {
+    this.colors = colors
     // Create an empty container for the cloud
     this.mesh = new THREE.Object3D()
     // Cube geometry and material
     var geom = new THREE.TetrahedronGeometry(20, 2)
     var mat = new THREE.MeshPhongMaterial({
-      color: Colors.white
+      color: this.colors.white
     })
 
     var nBlocs = 3 + Math.floor(Math.random() * 3)
@@ -185,7 +334,8 @@ class Cloud {
 }
 
 class Sky {
-  constructor() {
+  constructor(colors) {
+    this.colors = colors
     this.mesh = new THREE.Object3D()
 
     // Number of cloud groups
@@ -196,7 +346,7 @@ class Sky {
 
     // Create the Clouds
     for (var i = 0; i < this.nClouds; i++) {
-      var c = new Cloud()
+      var c = new Cloud(this.colors)
 
       //set rotation and position using trigonometry
       var a = stepAngle * i
@@ -221,16 +371,17 @@ class Sky {
 }
 
 class Tree {
-  constructor() {
+  constructor(colors) {
+    this.colors = colors
     this.mesh = new THREE.Object3D()
 
     var matTreeLeaves = new THREE.MeshPhongMaterial({
-      color: Colors.green,
+      color: this.colors.green,
       shading: THREE.FlatShading
     })
 
     var geonTreeBase = new THREE.BoxGeometry(10, 20, 10)
-    var matTreeBase = new THREE.MeshBasicMaterial({ color: Colors.brown })
+    var matTreeBase = new THREE.MeshBasicMaterial({ color: this.colors.brown })
     var treeBase = new THREE.Mesh(geonTreeBase, matTreeBase)
     treeBase.castShadow = true
     treeBase.receiveShadow = true
@@ -260,12 +411,13 @@ class Tree {
 }
 
 class Flower {
-  constructor() {
+  constructor(colors) {
+    this.colors = colors
     this.mesh = new THREE.Object3D()
-
+    this.petalColors = [this.colors.red, this.colors.yellow, this.colors.blue]
     var geomStem = new THREE.BoxGeometry(5, 50, 5, 1, 1, 1)
     var matStem = new THREE.MeshPhongMaterial({
-      color: Colors.green,
+      color: this.colors.green,
       shading: THREE.FlatShading
     })
     var stem = new THREE.Mesh(geomStem, matStem)
@@ -275,14 +427,14 @@ class Flower {
 
     var geomPetalCore = new THREE.BoxGeometry(10, 10, 10, 1, 1, 1)
     var matPetalCore = new THREE.MeshPhongMaterial({
-      color: Colors.yellow,
+      color: this.colors.yellow,
       shading: THREE.FlatShading
     })
     const petalCore = new THREE.Mesh(geomPetalCore, matPetalCore)
     petalCore.castShadow = false
     petalCore.receiveShadow = true
 
-    var petalColor = petalColors[Math.floor(Math.random() * 3)]
+    var petalColor = this.petalColors[Math.floor(Math.random() * 3)]
 
     var geomPetal = new THREE.BoxGeometry(15, 20, 5, 1, 1, 1)
     var matPetal = new THREE.MeshBasicMaterial({ color: petalColor })
@@ -307,10 +459,9 @@ class Flower {
   }
 }
 
-var petalColors = [Colors.red, Colors.yellow, Colors.blue]
-
 class Forest {
-  constructor() {
+  constructor(colors) {
+    this.colors = colors
     this.mesh = new THREE.Object3D()
 
     // Number of Trees
@@ -321,7 +472,7 @@ class Forest {
 
     // Create the Trees
     for (var i = 0; i < this.nTrees; i++) {
-      var t = new Tree()
+      var t = new Tree(colors)
 
       //set rotation and position using trigonometry
       var a = stepAngle * i
@@ -351,7 +502,7 @@ class Forest {
     var stepAngle = (Math.PI * 2) / this.nFlowers
 
     for (var i = 0; i < this.nFlowers; i++) {
-      var f = new Flower()
+      var f = new Flower(colors)
       var a = stepAngle * i
 
       var h = 605
@@ -371,13 +522,14 @@ class Forest {
 }
 
 class AirPlane {
-  constructor() {
+  constructor(colors) {
     this.mesh = new THREE.Object3D()
+    this.colors = colors
 
     // Create the cabin
     var geomCockpit = new THREE.BoxGeometry(80, 50, 50, 1, 1, 1)
     var matCockpit = new THREE.MeshPhongMaterial({
-      color: Colors.red,
+      color: this.colors.red,
       shading: THREE.FlatShading
     })
     geomCockpit.vertices[4].y -= 10
@@ -396,7 +548,7 @@ class AirPlane {
     // Create the engine
     var geomEngine = new THREE.BoxGeometry(20, 50, 50, 1, 1, 1)
     var matEngine = new THREE.MeshPhongMaterial({
-      color: Colors.white,
+      color: this.colors.white,
       shading: THREE.FlatShading
     })
     var engine = new THREE.Mesh(geomEngine, matEngine)
@@ -408,7 +560,7 @@ class AirPlane {
     // Create the tail
     var geomTailPlane = new THREE.BoxGeometry(15, 20, 5, 1, 1, 1)
     var matTailPlane = new THREE.MeshPhongMaterial({
-      color: Colors.red,
+      color: this.colors.red,
       shading: THREE.FlatShading
     })
     var tailPlane = new THREE.Mesh(geomTailPlane, matTailPlane)
@@ -420,7 +572,7 @@ class AirPlane {
     // Create the wing
     var geomSideWing = new THREE.BoxGeometry(40, 4, 150, 1, 1, 1)
     var matSideWing = new THREE.MeshPhongMaterial({
-      color: Colors.red,
+      color: this.colors.red,
       shading: THREE.FlatShading
     })
 
@@ -438,7 +590,7 @@ class AirPlane {
 
     var geomWindshield = new THREE.BoxGeometry(3, 15, 20, 1, 1, 1)
     var matWindshield = new THREE.MeshPhongMaterial({
-      color: Colors.white,
+      color: this.colors.white,
       transparent: true,
       opacity: 0.3,
       shading: THREE.FlatShading
@@ -461,7 +613,7 @@ class AirPlane {
     geomPropeller.vertices[7].y += 5
     geomPropeller.vertices[7].z -= 5
     var matPropeller = new THREE.MeshPhongMaterial({
-      color: Colors.brown,
+      color: this.colors.brown,
       shading: THREE.FlatShading
     })
     this.propeller = new THREE.Mesh(geomPropeller, matPropeller)
@@ -471,7 +623,7 @@ class AirPlane {
     var geomBlade1 = new THREE.BoxGeometry(1, 100, 10, 1, 1, 1)
     var geomBlade2 = new THREE.BoxGeometry(1, 10, 100, 1, 1, 1)
     var matBlade = new THREE.MeshPhongMaterial({
-      color: Colors.brownDark,
+      color: this.colors.brownDark,
       shading: THREE.FlatShading
     })
 
@@ -490,7 +642,7 @@ class AirPlane {
 
     var wheelProtecGeom = new THREE.BoxGeometry(30, 15, 10, 1, 1, 1)
     var wheelProtecMat = new THREE.MeshPhongMaterial({
-      color: Colors.white,
+      color: this.colors.white,
       shading: THREE.FlatShading
     })
     var wheelProtecR = new THREE.Mesh(wheelProtecGeom, wheelProtecMat)
@@ -499,7 +651,7 @@ class AirPlane {
 
     var wheelTireGeom = new THREE.BoxGeometry(24, 24, 4)
     var wheelTireMat = new THREE.MeshPhongMaterial({
-      color: Colors.brownDark,
+      color: this.colors.brownDark,
       shading: THREE.FlatShading
     })
     var wheelTireR = new THREE.Mesh(wheelTireGeom, wheelTireMat)
@@ -507,7 +659,7 @@ class AirPlane {
 
     var wheelAxisGeom = new THREE.BoxGeometry(10, 10, 6)
     var wheelAxisMat = new THREE.MeshPhongMaterial({
-      color: Colors.brown,
+      color: this.colors.brown,
       shading: THREE.FlatShading
     })
     var wheelAxis = new THREE.Mesh(wheelAxisGeom, wheelAxisMat)
@@ -531,7 +683,7 @@ class AirPlane {
     var suspensionGeom = new THREE.BoxGeometry(4, 20, 4)
     suspensionGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 10, 0))
     var suspensionMat = new THREE.MeshPhongMaterial({
-      color: Colors.red,
+      color: this.colors.red,
       shading: THREE.FlatShading
     })
     var suspension = new THREE.Mesh(suspensionGeom, suspensionMat)
@@ -540,153 +692,3 @@ class AirPlane {
     this.mesh.add(suspension)
   }
 }
-
-var sky
-var forest
-var land
-var orbit
-var airplane
-var sun
-
-var mousePos = { x: 8, y: 0 }
-var offSet = -600
-
-function createSky() {
-  sky = new Sky()
-  sky.mesh.position.y = offSet
-  scene.add(sky.mesh)
-}
-
-function createLand() {
-  land = new Land()
-  land.mesh.position.y = offSet
-  scene.add(land.mesh)
-}
-
-function createOrbit() {
-  orbit = new Orbit()
-  orbit.mesh.position.y = offSet
-  orbit.mesh.rotation.z = -Math.PI / 6
-  scene.add(orbit.mesh)
-}
-
-function createForest() {
-  forest = new Forest()
-  forest.mesh.position.y = offSet
-  scene.add(forest.mesh)
-}
-
-function createSun() {
-  sun = new Sun()
-  sun.mesh.scale.set(0.55, 0.55, 0.3)
-  sun.mesh.position.set(0, -20, -850)
-  scene.add(sun.mesh)
-}
-
-function createPlane() {
-  airplane = new AirPlane()
-  airplane.mesh.scale.set(0.35, 0.35, 0.35)
-  airplane.mesh.position.set(-10, 110, -240)
-  // airplane.mesh.rotation.z = Math.PI/15;
-  scene.add(airplane.mesh)
-}
-
-function updatePlane() {
-  var targetY = normalize(mousePos.y, -0.75, 0.75, 50, 190)
-  var targetX = normalize(mousePos.x, -0.75, 0.75, -100, -20)
-
-  // Move the plane at each frame by adding a fraction of the remaining distance
-  airplane.mesh.position.y += (targetY - airplane.mesh.position.y) * 0.1
-
-  airplane.mesh.position.x += (targetX - airplane.mesh.position.x) * 0.1 + 8
-
-  // Rotate the plane proportionally to the remaining distance
-  airplane.mesh.rotation.z = (targetY - airplane.mesh.position.y) * 0.0128
-  airplane.mesh.rotation.x = (airplane.mesh.position.y - targetY) * 0.0064
-  airplane.mesh.rotation.y = (airplane.mesh.position.x - targetX) * 0.0064
-
-  airplane.propeller.rotation.x += 0.3
-}
-
-function normalize(v, vmin, vmax, tmin, tmax) {
-  var nv = Math.max(Math.min(v, vmax), vmin)
-  var dv = vmax - vmin
-  var pc = (nv - vmin) / dv
-  var dt = tmax - tmin
-  var tv = tmin + pc * dt
-  return tv
-}
-
-function loop() {
-  if (renderer) {
-    land.mesh.rotation.z += 0.002
-    orbit.mesh.rotation.z += 0.001
-    sky.mesh.rotation.z += 0.001
-    forest.mesh.rotation.z += 0.002
-    updatePlane()
-
-    renderer.render(scene, camera)
-    requestAnimationFrame(loop)
-  }
-}
-
-function handleMouseMove(event) {
-  var tx = -1 + (event.clientX / WIDTH) * 2
-  var ty = 1 - (event.clientY / HEIGHT) * 2
-  mousePos = { x: tx, y: ty }
-}
-
-function init(event, canvas) {
-  try {
-    if (canvas) {
-      createScene(canvas)
-      createLights(event)
-      createPlane(event)
-      createOrbit(event)
-      createSun(event)
-      createLand(event)
-      createForest(event)
-      createSky(event)
-      window.addEventListener('mousemove', handleMouseMove, false)
-      window.addEventListener('load', init, false)
-    }
-
-    loop()
-
-    return () => {
-      renderer = null
-      scene.traverse(object => {
-        if (!object.isMesh) return
-
-        console.log('dispose geometry!')
-        object.geometry.dispose()
-
-        if (object.material.isMaterial) {
-          cleanMaterial(object.material)
-        } else {
-          // an array of materials
-          for (const material of object.material) cleanMaterial(material)
-        }
-      })
-
-      const cleanMaterial = material => {
-        console.log('dispose material!')
-        material.dispose()
-
-        // dispose textures
-        for (const key of Object.keys(material)) {
-          const value = material[key]
-          if (value && typeof value === 'object' && 'minFilter' in value) {
-            console.log('dispose texture!')
-            value.dispose()
-          }
-        }
-      }
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('load', init)
-      window.removeEventListener('resize', handleWindowResize)
-    }
-  } catch (error) {}
-}
-
-export default init
