@@ -32,7 +32,7 @@ const Footer = () => (
             <Spaced left="s">
               <Link
                 as="a"
-                href="https://twitter.com/HarrellofDurham"
+                href="https://twitter.com/orincatali/"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Twitter"
@@ -42,7 +42,7 @@ const Footer = () => (
               </Link>
               <Link
                 as="a"
-                href="https://github.com/jonathanharrell/"
+                href="https://github.com/orincatali/"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Github"
@@ -50,7 +50,7 @@ const Footer = () => (
                 <ScreenReaderText>Github</ScreenReaderText>
                 <GitHub />
               </Link>
-              <Link
+              {/* <Link
                 as="a"
                 href="https://codepen.io/jonathanharrell/"
                 target="_blank"
@@ -59,10 +59,10 @@ const Footer = () => (
               >
                 <ScreenReaderText>Codepen</ScreenReaderText>
                 <Codepen />
-              </Link>
+              </Link> */}
               <Link
                 as="a"
-                href="https://www.linkedin.com/in/jonathanharrell/"
+                href="https://www.linkedin.com/in/florinm/"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="LinkedIn"
@@ -72,7 +72,7 @@ const Footer = () => (
               </Link>
               <Link
                 as="a"
-                href="https://www.instagram.com/harrellofdurham/"
+                href="https://instagram.com/orincatali/"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Instagram"
@@ -80,10 +80,10 @@ const Footer = () => (
                 <ScreenReaderText>Instagram</ScreenReaderText>
                 <Instagram />
               </Link>
-              <Link as="a" href="/rss.xml" title="RSS Feed">
+              {/* <Link as="a" href="/rss.xml" title="RSS Feed">
                 <ScreenReaderText>RSS Feed</ScreenReaderText>
                 <Rss />
-              </Link>
+              </Link> */}
             </Spaced>
           </nav>
         </SocialLinksWrap>

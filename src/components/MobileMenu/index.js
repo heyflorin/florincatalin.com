@@ -221,8 +221,8 @@ const MobileMenu = ({ location }) => {
                                   ref={firstTabbableElementRef}
                                   getProps={isActive}
                                 >
-                                  <Heading level={1} element="span">
-                                    Home
+                                  <Heading level={3} element="span">
+                                    Florin Catalin
                                   </Heading>
                                 </MenuLink>
                               </MenuLinkWrap>
