@@ -203,14 +203,14 @@ const MobileMenu = ({ location }) => {
                     </MenuHeader>
                     <Spaced vertical="2x">
                       <section aria-labelledby="site-links-label">
-                        <h3>
+                        {/* <h3>
                           <ScreenReaderText id="site-links-label">
                             Site Links
                           </ScreenReaderText>
                           <Text order="meta" aria-hidden>
                             Links
                           </Text>
-                        </h3>
+                        </h3> */}
                         <nav role="navigation">
                           <ul>
                             <Spaced vertical="l">
@@ -223,13 +223,6 @@ const MobileMenu = ({ location }) => {
                                 >
                                   <Heading level={1} element="span">
                                     Home
-                                  </Heading>
-                                </MenuLink>
-                              </MenuLinkWrap>
-                              <MenuLinkWrap>
-                                <MenuLink to="/blog" getProps={isActive}>
-                                  <Heading level={1} element="span">
-                                    Articles
                                   </Heading>
                                 </MenuLink>
                               </MenuLinkWrap>
@@ -297,7 +290,7 @@ const MobileMenu = ({ location }) => {
                           </ThemeOptions>
                         </Spaced>
                       </section>
-                      <section aria-labelledby="search-label">
+                      {/* <section aria-labelledby="search-label">
                         <h3 id="search-label">
                           <Text order="meta">Site search</Text>
                         </h3>
@@ -320,7 +313,7 @@ const MobileMenu = ({ location }) => {
                             </SearchModal>
                           </div>
                         </Spaced>
-                      </section>
+                      </section> */}
                     </Spaced>
                   </div>
                 </Padded>
