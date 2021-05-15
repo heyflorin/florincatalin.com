@@ -11,21 +11,21 @@ import Button from '../../jh-ui/Button'
 import Link from '../../jh-ui/Link'
 import Seo from '../../components/seo'
 import PageTitle from '../../components/PageTitle'
-import RecentArticles from '../../components/RecentArticles'
-import Experiments from '../../components/Experiments'
+import RecentWork from '../../components/RecentWork'
+// import Experiments from '../../components/Experiments'
 import HeaderScene from '../../home-animation'
 import { shouldAnimate } from '../../helpers'
 import ThemeContext from '../../context/theme'
 
 import {
   Canvas,
-  ExperimentsWrap,
+  // ExperimentsWrap,
   HeaderContentWrap,
   HeaderTextWrap,
   HeaderWrap,
   HomeContentWrap,
   HomeIllustration,
-  RecentArticlesWrap
+  RecentWorkWrap
 } from './styles'
 import HomeIllustrationSrc from '../../img/home-illustration.png'
 
@@ -120,7 +120,7 @@ export const IndexPageTemplate = ({ title, description, experiments }) => {
           </HeaderContentWrap>
         </HomeContentWrap>
       </HeaderWrap>
-      <RecentArticlesWrap aria-labelledby="recent-articles-label">
+      <RecentWorkWrap aria-labelledby="recent-articles-label">
         <HomeContentWrap>
           <SectionHeader>
             <motion.div
@@ -134,7 +134,7 @@ export const IndexPageTemplate = ({ title, description, experiments }) => {
               }}
             >
               <Heading level={2} id="recent-articles-label">
-                Recent Articles
+                Recent Work
               </Heading>
             </motion.div>
             <motion.div
@@ -148,21 +148,21 @@ export const IndexPageTemplate = ({ title, description, experiments }) => {
               }}
             >
               <Link
-                to="/blog"
+                to="/work"
                 arrow={true}
                 aria-labelledby="view-all-articles-label"
               >
                 <span aria-hidden>View all</span>
                 <ScreenReaderText id="view-all-articles-label">
-                  View all articles
+                  View all work
                 </ScreenReaderText>
               </Link>
             </motion.div>
           </SectionHeader>
-          <RecentArticles />
+          <RecentWork />
         </HomeContentWrap>
-      </RecentArticlesWrap>
-      <ExperimentsWrap aria-labelledby="recent-experiments-label">
+      </RecentWorkWrap>
+      {/* <ExperimentsWrap aria-labelledby="recent-experiments-label">
         <HomeContentWrap>
           <SectionHeader>
             <motion.div
@@ -209,21 +209,21 @@ export const IndexPageTemplate = ({ title, description, experiments }) => {
           </SectionHeader>
           <Experiments experiments={experiments} />
         </HomeContentWrap>
-      </ExperimentsWrap>
+      </ExperimentsWrap> */}
     </>
   )
 }
 
 IndexPageTemplate.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  experiments: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired
-    })
-  ).isRequired
+  description: PropTypes.string.isRequired
+  // experiments: PropTypes.arrayOf(
+  //   PropTypes.shape({
+  //     id: PropTypes.string.isRequired,
+  //     title: PropTypes.string.isRequired,
+  //     date: PropTypes.string.isRequired
+  //   })
+  // ).isRequired
 }
 
 const IndexPage = ({
@@ -234,7 +234,7 @@ const IndexPage = ({
   <IndexPageTemplate
     title={frontmatter.title}
     description={frontmatter.description}
-    experiments={frontmatter.experiments}
+    // experiments={frontmatter.experiments}
   />
 )
 
@@ -243,14 +243,14 @@ IndexPage.propTypes = {
     mdx: PropTypes.shape({
       frontmatter: PropTypes.shape({
         title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        experiments: PropTypes.arrayOf(
-          PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            date: PropTypes.string.isRequired
-          })
-        ).isRequired
+        description: PropTypes.string.isRequired
+        // experiments: PropTypes.arrayOf(
+        //   PropTypes.shape({
+        //     id: PropTypes.string.isRequired,
+        //     title: PropTypes.string.isRequired,
+        //     date: PropTypes.string.isRequired
+        //   })
+        // ).isRequired
       }).isRequired
     }).isRequired
   }).isRequired

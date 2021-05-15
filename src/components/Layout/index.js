@@ -126,7 +126,7 @@ const Layout = ({ location, children, ...rest }) => {
           </MDXProvider>
         </Main>
         <Footer />
-        <SubscribeBanner />
+        {/* <SubscribeBanner /> */}
       </Wrap>
     </ThemeProvider>
   )

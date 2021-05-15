@@ -97,7 +97,7 @@ export const HeaderTextWrap = styled.div`
   max-width: 28rem;
 `
 
-export const RecentArticlesWrap = styled.section`
+export const RecentWorkWrap = styled.section`
   background-color: var(--backgroundSecondary);
 `
 
