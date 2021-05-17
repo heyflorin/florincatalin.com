@@ -7,7 +7,7 @@ export const HeaderWrap = styled.header`
   overflow: hidden;
   padding-top: 5rem;
   background-color: var(--backgroundPrimary);
-  box-shadow: inset 0 -1px 5px hsl(0, 0%, 0%, 15%);
+  ${'' /* box-shadow: inset 0 -1px 5px hsl(0, 0%, 0%, 15%); */}
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     padding-top: 7rem;
@@ -34,23 +34,41 @@ export const HomeContentWrap = styled(ContentWrap)`
   }
 `
 
-export const Canvas = styled(motion.canvas)`
+export const StacksWrap = styled(motion.div)`
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--backgroundPrimary);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
   position: absolute;
-  top: calc(50% + 5vh);
-  right: auto;
-  background: var(--gradientSky);
-  filter: var(--isDark);
+  top: 0;
+  left: 25%;
+  z-index: 1;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    left: auto;
+    ${'' /* opacity: 0.3 !important; */}
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    opacity: 1;
+    left: 20%;
+    ${'' /* opacity: 0.5 !important; */}
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    right: auto;
+    left: 20%;
+    ${'' /* opacity: 0.5 !important; */}
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktopLarge}) {
-    right: auto;
+    ${'' /* left: 20%; */}
   }
 `
 
@@ -90,6 +108,8 @@ export const HomeIllustration = styled.img`
 
 export const HeaderContentWrap = styled.div`
   position: relative;
+  max-width: 28rem;
+  z-index: 2;
 `
 
 export const HeaderTextWrap = styled.div`

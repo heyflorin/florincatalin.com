@@ -84,7 +84,11 @@
     "three-js": "^79.0.0",
     "tippy.js": "^6.1.1",
     "typemate": "^0.7.1",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "@react-three/fiber": "6.0.10",
+    "react-scripts": "4.0.3",
+    "react-spring": "9.1.0",
+    "three": "0.114.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.3",

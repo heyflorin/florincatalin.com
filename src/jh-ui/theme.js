@@ -10,8 +10,8 @@ export const colors = {
   blueDarker: 'hsl(210, 67%, 13%)',
   black: 'hsl(0, 0%, 0%)',
   white: 'hsl(0, 0%, 100%)',
-  red: 'hsl(5, 75%, 60%)',
-  redDark: 'hsl(10, 66%, 40%)'
+  red: 'hsl(196.6, 62.6%, 44.4%)',
+  redDark: 'hsl(196.6, 71.4%, 32.8%)'
 }
 
 export const elevations = {
@@ -28,9 +28,9 @@ export const fonts = {
 
 export const fontSizes = {
   xxxl: {
-    mobile: '2.125rem',
-    tablet: '2.5rem',
-    desktop: '2.875rem'
+    mobile: '2.425rem',
+    tablet: '2.8rem',
+    desktop: '3.175rem'
   },
   xxl: {
     mobile: '1.875rem',

@@ -13,9 +13,9 @@ import Seo from '../../components/seo'
 import PageTitle from '../../components/PageTitle'
 import RecentWork from '../../components/RecentWork'
 // import Experiments from '../../components/Experiments'
-import HeaderScene from '../../home-animation'
 import { shouldAnimate } from '../../helpers'
 import ThemeContext from '../../context/theme'
+import Stacks from '../../stacks'
 
 import {
   Canvas,
@@ -25,45 +25,41 @@ import {
   HeaderWrap,
   HomeContentWrap,
   HomeIllustration,
-  RecentWorkWrap
+  RecentWorkWrap,
+  StacksWrap
 } from './styles'
 import HomeIllustrationSrc from '../../img/home-illustration.png'
 
 export const IndexPageTemplate = ({ title, description, experiments }) => {
+  const [delayed, setDelayed] = useState(true)
   const { themeName } = useContext(ThemeContext)
   const prevThemeName = useRef()
-  const canvasRef = useRef()
-  const headerScene = useRef()
 
   useEffect(() => {
-    if (!prevThemeName.current) {
-      headerScene.current = new HeaderScene(canvasRef)
-      headerScene.current.init(themeName)
-    }
-    return () => {
-      headerScene.current.cleanup()
-    }
+    const timeout = setTimeout(() => setDelayed(false), 600)
+    return () => clearTimeout(timeout)
   }, [])
 
-  useEffect(() => {
-    if (prevThemeName.current != themeName) {
-      headerScene.current.updateFog(themeName)
-    }
-    prevThemeName.current = themeName
-  }, [themeName])
+  // useEffect(() => {
+  //   if (prevThemeName.current != themeName) {
+  //     headerScene.current.updateFog(themeName)
+  //   }
+  //   prevThemeName.current = themeName
+  // }, [themeName])
 
   return (
     <>
       <Seo />
       <HeaderWrap aria-labelledby="introduction-label">
-        {shouldAnimate() && (
-          <Canvas
-            ref={canvasRef}
-            initial={{ opacity: 0, scale: 1, y: '-50%' }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: 'spring', stiffness: 50, mass: 0.2 }}
+        {shouldAnimate() && !delayed && (
+          <StacksWrap
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 3, mass: 0.9 }}
             role="presentation"
-          />
+          >
+            <Stacks />
+          </StacksWrap>
         )}
         <noscript>
           <HomeIllustration
