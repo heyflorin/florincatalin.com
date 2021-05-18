@@ -21,7 +21,7 @@ const Header = ({ location, shell }) => (
           <SiteTitle level={4} element="span">
             <HomePageLink to="/" aria-label="Home" rel="home">
               <Spaced right="xs">
-                <Icon>{`😬`}</Icon>
+                <Icon>{`🦄`}</Icon>
               </Spaced>
               Florin Catalin
             </HomePageLink>

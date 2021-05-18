@@ -103,7 +103,7 @@ export default () => (
         # }
         allMdx(
           limit: 5
-          sort: { order: DESC, fields: [frontmatter___date] }
+          sort: { order: ASC, fields: [frontmatter___date] }
           filter: { frontmatter: { templateKey: { eq: "project" } } }
         ) {
           edges {

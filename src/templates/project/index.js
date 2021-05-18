@@ -15,6 +15,7 @@ import Seo from '../../components/seo'
 import ContentWrap from '../../components/ContentWrap'
 import PageTitle from '../../components/PageTitle'
 import ProjectImage from '../../components/ProjectImage'
+import CalloutLink from '../../components/CalloutLink'
 import ThemeContext from '../../context/theme'
 import website from '../../../website-config'
 import { shouldAnimate } from '../../helpers'
@@ -25,9 +26,16 @@ import {
   LightThemeAlertWrap,
   ProjectWrap,
   Section,
+  OverviewSection,
   SectionContentWrap,
   SectionDescription,
   SectionImageWrap,
+  SectionImageCaptionWrap,
+  OverviewContentWrap,
+  OverviewKey,
+  OverviewValue,
+  OverviewDescription,
+  OverviewGrid,
   SectionTitle,
   ThemeAlertContentWrap
 } from './styles'
@@ -55,12 +63,15 @@ export const ProjectTemplate = ({
   title,
   description,
   role,
+  client,
+  products,
+  link,
   coverImage,
   sections
 }) => {
   const { themeName, setTheme } = useContext(ThemeContext)
   const [themeAlertVisible, setThemeAlertVisible] = useState(false)
-
+  console.log('client', client)
   useEffect(() => {
     try {
       const themeAlertDismissed = localStorage.getItem('themeAlertDismissed')
@@ -139,6 +150,52 @@ export const ProjectTemplate = ({
             </Padded>
           </ContentWrap>
         </Header>
+        <section>
+          <motion.div animate="mounted" variants={variants}>
+            <ContentWrap>
+              <Padded vertical="2x">
+                <OverviewSection
+                  variants={childVariants}
+                  initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
+                >
+                  <OverviewContentWrap>
+                    <OverviewGrid>
+                      <Spaced bottom="xs">
+                        <OverviewKey>
+                          <Text order="meta">Client</Text>
+                        </OverviewKey>
+                        <OverviewValue>{client}</OverviewValue>
+                      </Spaced>
+                      <Spaced bottom="xs">
+                        <OverviewKey>
+                          <Text order="meta">Product</Text>
+                        </OverviewKey>
+                        <OverviewValue>{products}</OverviewValue>
+                      </Spaced>
+                    </OverviewGrid>
+                    <Spaced bottom="2x">
+                      <OverviewDescription>
+                        <Spaced bottom="xs">
+                          <OverviewKey>
+                            <Text order="meta">Overview</Text>
+                          </OverviewKey>
+                          <OverviewValue>{description}</OverviewValue>{' '}
+                        </Spaced>
+                      </OverviewDescription>
+                    </Spaced>
+                    {link.url && link.title && (
+                      <CalloutLink
+                        url={link.url}
+                        title={link.title}
+                        description="View this project live on the web"
+                      />
+                    )}
+                  </OverviewContentWrap>
+                </OverviewSection>
+              </Padded>
+            </ContentWrap>
+          </motion.div>
+        </section>
         {sections.length && (
           <section>
             <Spaced bottom="5x">
@@ -163,9 +220,22 @@ export const ProjectTemplate = ({
                               {section.description}
                             </SectionDescription>
                           </Spaced>
-                          <SectionImageWrap shadow={section.image.shadow}>
-                            <ProjectImage image={section.image} />
-                          </SectionImageWrap>
+                          {section.image && (
+                            <>
+                              <SectionImageWrap shadow={section.image.shadow}>
+                                <ProjectImage image={section.image} />
+                              </SectionImageWrap>
+                              {section.image.caption && (
+                                <SectionImageCaptionWrap>
+                                  <Spaced top="s">
+                                    <Text order="caption" element="figcaption">
+                                      {section.image.caption}
+                                    </Text>
+                                  </Spaced>
+                                </SectionImageCaptionWrap>
+                              )}
+                            </>
+                          )}
                         </SectionContentWrap>
                       </Section>
                     </Padded>
@@ -215,6 +285,12 @@ ProjectTemplate.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   role: PropTypes.string.isRequired,
+  client: PropTypes.string.isRequired,
+  products: PropTypes.string.isRequired,
+  link: PropTypes.shape({
+    url: PropTypes.string,
+    title: PropTypes.string
+  }),
   coverImage: PropTypes.shape({
     light: PropTypes.shape({
       publicURL: PropTypes.string.isRequired
@@ -238,6 +314,7 @@ ProjectTemplate.propTypes = {
           publicURL: PropTypes.string.isRequired
         }).isRequired,
         alt: PropTypes.string,
+        caption: PropTypes.string,
         shadow: PropTypes.bool.isRequired
       }).isRequired
     }).isRequired
@@ -250,6 +327,9 @@ const Project = ({ location, data: { mdx: post } }) => (
     title={post.frontmatter.title}
     description={post.frontmatter.description}
     role={post.frontmatter.role}
+    client={post.frontmatter.client}
+    products={post.frontmatter.products}
+    link={post.frontmatter.link}
     coverImage={post.frontmatter.coverImage}
     sections={post.frontmatter.sections}
   />
@@ -263,6 +343,12 @@ Project.propTypes = {
         title: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
         role: PropTypes.string.isRequired,
+        client: PropTypes.string.isRequired,
+        products: PropTypes.string.isRequired,
+        link: PropTypes.shape({
+          url: PropTypes.string,
+          title: PropTypes.string
+        }),
         coverImage: PropTypes.shape({
           light: PropTypes.shape({
             publicURL: PropTypes.string.isRequired
@@ -286,6 +372,7 @@ Project.propTypes = {
                 publicURL: PropTypes.string.isRequired
               }).isRequired,
               alt: PropTypes.string,
+              caption: PropTypes.string,
               shadow: PropTypes.bool.isRequired
             }).isRequired
           }).isRequired
@@ -304,6 +391,12 @@ export const pageQuery = graphql`
         title
         description
         role
+        client
+        products
+        link: link {
+          url
+          title
+        }
         coverImage: coverimage {
           light {
             publicURL
@@ -338,6 +431,7 @@ export const pageQuery = graphql`
               publicURL
             }
             alt
+            caption
             shadow
           }
         }

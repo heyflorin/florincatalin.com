@@ -200,6 +200,8 @@ WorkIndexPage.propTypes = {
             frontmatter: PropTypes.shape({
               title: PropTypes.string.isRequired,
               role: PropTypes.string.isRequired,
+              client: PropTypes.string.isRequired,
+              products: PropTypes.string.isRequired,
               description: PropTypes.string.isRequired,
               image: PropTypes.shape({
                 light: PropTypes.shape({
@@ -246,6 +248,8 @@ export const workPageQuery = graphql`
           frontmatter {
             title
             role
+            client
+            products
             description
             image: coverimage {
               light {
