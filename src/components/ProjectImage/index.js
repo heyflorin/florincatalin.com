@@ -13,12 +13,15 @@ const ProjectImage = ({ image, ...props }) => {
 
   return (
     <figure {...props}>
-      {themeName && (
-        <Image
-          alt={image.alt || ''}
-          fluid={image[themeName].childImageSharp.fluid}
-        />
-      )}
+      {themeName &&
+        (image.gif ? (
+          <img src={image.gif.publicURL} alt={image.alt} />
+        ) : (
+          <Image
+            alt={image.alt || ''}
+            fluid={image[themeName].childImageSharp.fluid}
+          />
+        ))}
       <noscript>
         <picture>
           <source
@@ -50,6 +53,9 @@ ProjectImage.propTypes = {
       }).isRequired,
       publicURL: PropTypes.string.isRequired
     }).isRequired,
+    gif: PropTypes.shape({
+      publicURL: PropTypes.string
+    }),
     alt: PropTypes.string
   }).isRequired
 }

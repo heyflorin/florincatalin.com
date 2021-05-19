@@ -313,6 +313,9 @@ ProjectTemplate.propTypes = {
           }).isRequired,
           publicURL: PropTypes.string.isRequired
         }).isRequired,
+        gif: PropTypes.shape({
+          publicURL: PropTypes.string
+        }),
         alt: PropTypes.string,
         caption: PropTypes.string,
         shadow: PropTypes.bool.isRequired
@@ -371,6 +374,9 @@ Project.propTypes = {
                 }).isRequired,
                 publicURL: PropTypes.string.isRequired
               }).isRequired,
+              gif: PropTypes.shape({
+                publicURL: PropTypes.string
+              }),
               alt: PropTypes.string,
               caption: PropTypes.string,
               shadow: PropTypes.bool.isRequired
@@ -428,6 +434,9 @@ export const pageQuery = graphql`
                   ...GatsbyImageSharpFluid_withWebp
                 }
               }
+              publicURL
+            }
+            gif {
               publicURL
             }
             alt

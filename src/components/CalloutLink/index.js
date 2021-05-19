@@ -7,12 +7,7 @@ import Heading from '../../jh-ui/Heading'
 import Text from '../../jh-ui/Text'
 import ScreenReaderText from '../../jh-ui/ScreenReaderText'
 import { ExternalLink } from 'react-feather'
-import {
-  CalloutLinkFigure,
-  // CalloutLinkImage,
-  CalloutLinkLink,
-  CalloutLinkWrap
-} from './styles'
+import { CalloutLinkFigure, CalloutLinkLink, CalloutLinkWrap } from './styles'
 
 const CalloutLink = ({ url, title, thumbnailUrl }) => (
   <Spaced bottom="5x">
@@ -22,7 +17,7 @@ const CalloutLink = ({ url, title, thumbnailUrl }) => (
       element="article"
     >
       <CalloutLinkLink href={url} target="_blank" rel="noopener noreferrer">
-        <ScreenReaderText>Go to experiment</ScreenReaderText>
+        <ScreenReaderText>View this project on the web</ScreenReaderText>
       </CalloutLinkLink>
       <CalloutLinkFigure>
         <ExternalLink size={32} />
@@ -34,7 +29,7 @@ const CalloutLink = ({ url, title, thumbnailUrl }) => (
           </Heading>
           <Spaced top="xs">
             <Text element="p" color="textLighter">
-              View the project on the web
+              View this project on the web
             </Text>
           </Spaced>
         </div>

@@ -38,12 +38,3 @@ export const CalloutLinkFigure = styled.figure`
     flex: 0 0 8rem;
   }
 `
-
-export const CalloutLinkImage = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100% !important;
-  object-fit: cover;
-`
