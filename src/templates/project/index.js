@@ -27,6 +27,7 @@ import {
   ProjectWrap,
   Section,
   OverviewSection,
+  OverviewSectionWrap,
   SectionContentWrap,
   SectionDescription,
   SectionImageWrap,
@@ -37,7 +38,8 @@ import {
   OverviewDescription,
   OverviewGrid,
   SectionTitle,
-  ThemeAlertContentWrap
+  ThemeAlertContentWrap,
+  ProjectImageWrap
 } from './styles'
 
 const variants = {
@@ -61,6 +63,7 @@ const childVariants = {
 export const ProjectTemplate = ({
   location,
   title,
+  component,
   description,
   role,
   client,
@@ -71,19 +74,32 @@ export const ProjectTemplate = ({
 }) => {
   const { themeName, setTheme } = useContext(ThemeContext)
   const [themeAlertVisible, setThemeAlertVisible] = useState(false)
-  console.log('client', client)
   useEffect(() => {
-    try {
-      const themeAlertDismissed = localStorage.getItem('themeAlertDismissed')
-      setThemeAlertVisible(!themeAlertDismissed)
-    } catch (error) {
-      setThemeAlertVisible(true)
+    // Check if a there are separate dark/light variations of section images
+    if (
+      sections.some(
+        item =>
+          item.image &&
+          item.image.light &&
+          item.image.light.publicURL &&
+          (item.image.dark && item.image.dark.publicURL) &&
+          item.image.light.publicURL != item.image.dark.publicURL
+      )
+    ) {
+      try {
+        const themeAlertDismissed = localStorage.getItem('themeAlertDismissed')
+        console.log('themeAlertDismissed', themeAlertDismissed)
+        setThemeAlertVisible(!themeAlertDismissed)
+      } catch (error) {
+        setThemeAlertVisible(true)
+      }
     }
   }, [])
 
   const swapTheme = event => {
     event.preventDefault()
-    setTheme('light')
+    setTheme(themeName === 'light' ? 'dark' : 'light')
+    dismissThemeAlert()
   }
 
   const dismissThemeAlert = () => {
@@ -107,7 +123,7 @@ export const ProjectTemplate = ({
       <ProjectWrap>
         <Header>
           <ContentWrap>
-            <Padded vertical="3x">
+            <Padded vertical="5x">
               <div>
                 <motion.div
                   initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
@@ -150,11 +166,11 @@ export const ProjectTemplate = ({
             </Padded>
           </ContentWrap>
         </Header>
-        <section>
+        <OverviewSection>
           <motion.div animate="mounted" variants={variants}>
             <ContentWrap>
-              <Padded vertical="2x">
-                <OverviewSection
+              <Padded vertical="5x">
+                <OverviewSectionWrap
                   variants={childVariants}
                   initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
                 >
@@ -168,7 +184,7 @@ export const ProjectTemplate = ({
                       </Spaced>
                       <Spaced bottom="xs">
                         <OverviewKey>
-                          <Text order="meta">Product</Text>
+                          <Text order="meta">Products</Text>
                         </OverviewKey>
                         <OverviewValue>{products}</OverviewValue>
                       </Spaced>
@@ -183,7 +199,14 @@ export const ProjectTemplate = ({
                         </Spaced>
                       </OverviewDescription>
                     </Spaced>
-                    {link.url && link.title && (
+                    {coverImage && (
+                      <Spaced bottom="2x">
+                        <ProjectImageWrap shadow={coverImage.shadow}>
+                          <ProjectImage image={coverImage} />
+                        </ProjectImageWrap>
+                      </Spaced>
+                    )}
+                    {link && link.url && link.title && (
                       <CalloutLink
                         url={link.url}
                         title={link.title}
@@ -191,62 +214,66 @@ export const ProjectTemplate = ({
                       />
                     )}
                   </OverviewContentWrap>
-                </OverviewSection>
+                </OverviewSectionWrap>
               </Padded>
             </ContentWrap>
           </motion.div>
-        </section>
+        </OverviewSection>
         {sections.length && (
           <section>
-            <Spaced bottom="5x">
-              <motion.div animate="mounted" variants={variants}>
-                <ContentWrap>
-                  {sections.map((section, index) => (
-                    <Padded key={index} vertical="2x">
-                      <Section
-                        variants={childVariants}
-                        initial={
-                          shouldAnimate() ? { opacity: 0, y: 50 } : false
-                        }
-                      >
-                        <SectionContentWrap>
+            <motion.div animate="mounted" variants={variants}>
+              <ContentWrap>
+                {sections.map((section, index) => (
+                  <Padded key={index} vertical="5x">
+                    <Section
+                      variants={childVariants}
+                      initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
+                    >
+                      <SectionContentWrap>
+                        <OverviewGrid>
                           <Spaced bottom="s">
+                            {section.component && (
+                              <OverviewKey>
+                                <Text order="meta">{section.component}</Text>
+                              </OverviewKey>
+                            )}
                             <SectionTitle level={2}>
                               {section.title}
                             </SectionTitle>
                           </Spaced>
-                          <Spaced bottom="2x">
-                            <SectionDescription>
-                              {section.description}
-                            </SectionDescription>
-                          </Spaced>
-                          {section.image && (
-                            <>
-                              <SectionImageWrap shadow={section.image.shadow}>
-                                <ProjectImage image={section.image} />
-                              </SectionImageWrap>
-                              {section.image.caption && (
-                                <SectionImageCaptionWrap>
-                                  <Spaced top="s">
-                                    <Text order="caption" element="figcaption">
-                                      {section.image.caption}
-                                    </Text>
-                                  </Spaced>
-                                </SectionImageCaptionWrap>
-                              )}
-                            </>
-                          )}
-                        </SectionContentWrap>
-                      </Section>
-                    </Padded>
-                  ))}
-                </ContentWrap>
-              </motion.div>
-            </Spaced>
+                        </OverviewGrid>
+                        <Spaced bottom="2x">
+                          <SectionDescription>
+                            {section.description}
+                          </SectionDescription>
+                        </Spaced>
+                        {section.image && (
+                          <>
+                            <SectionImageWrap shadow={section.image.shadow}>
+                              <ProjectImage image={section.image} />
+                            </SectionImageWrap>
+                            {section.image.caption && (
+                              <SectionImageCaptionWrap>
+                                <Spaced top="s">
+                                  <Text order="caption" element="figcaption">
+                                    {section.image.caption}
+                                  </Text>
+                                </Spaced>
+                              </SectionImageCaptionWrap>
+                            )}
+                          </>
+                        )}
+                      </SectionContentWrap>
+                    </Section>
+                  </Padded>
+                ))}
+              </ContentWrap>
+            </motion.div>
           </section>
         )}
+
         <AnimatePresence>
-          {themeName === 'dark' && themeAlertVisible && (
+          {themeAlertVisible && (
             <LightThemeAlertWrap
               initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
               animate={{ opacity: 1, y: 0 }}
@@ -262,7 +289,8 @@ export const ProjectTemplate = ({
                         <Link element="button" onClick={swapTheme}>
                           Swap themes
                         </Link>{' '}
-                        to see light versions of these designs
+                        to see {themeName === 'light' ? 'dark' : 'light'}{' '}
+                        versions of these designs (where applicable)
                       </Text>
                       <CloseButton onClick={dismissThemeAlert}>
                         <ScreenReaderText>Dismiss Theme Alert</ScreenReaderText>
@@ -294,11 +322,13 @@ ProjectTemplate.propTypes = {
   coverImage: PropTypes.shape({
     light: PropTypes.shape({
       publicURL: PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    shadow: PropTypes.bool.isRequired
   }).isRequired,
   sections: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
+      component: PropTypes.string,
       description: PropTypes.string.isRequired,
       image: PropTypes.shape({
         light: PropTypes.shape({
@@ -313,13 +343,13 @@ ProjectTemplate.propTypes = {
           }).isRequired,
           publicURL: PropTypes.string.isRequired
         }).isRequired,
-        gif: PropTypes.shape({
+        animation: PropTypes.shape({
           publicURL: PropTypes.string
         }),
         alt: PropTypes.string,
         caption: PropTypes.string,
         shadow: PropTypes.bool.isRequired
-      }).isRequired
+      })
     }).isRequired
   ).isRequired
 }
@@ -355,11 +385,13 @@ Project.propTypes = {
         coverImage: PropTypes.shape({
           light: PropTypes.shape({
             publicURL: PropTypes.string.isRequired
-          }).isRequired
+          }).isRequired,
+          shadow: PropTypes.bool.isRequired
         }).isRequired,
         sections: PropTypes.arrayOf(
           PropTypes.shape({
             title: PropTypes.string.isRequired,
+            component: PropTypes.string,
             description: PropTypes.string.isRequired,
             image: PropTypes.shape({
               light: PropTypes.shape({
@@ -374,13 +406,13 @@ Project.propTypes = {
                 }).isRequired,
                 publicURL: PropTypes.string.isRequired
               }).isRequired,
-              gif: PropTypes.shape({
+              animation: PropTypes.shape({
                 publicURL: PropTypes.string
               }),
               alt: PropTypes.string,
               caption: PropTypes.string,
               shadow: PropTypes.bool.isRequired
-            }).isRequired
+            })
           }).isRequired
         ).isRequired
       }).isRequired
@@ -405,11 +437,26 @@ export const pageQuery = graphql`
         }
         coverImage: coverimage {
           light {
+            childImageSharp {
+              fluid(maxWidth: 960, srcSetBreakpoints: [340, 680]) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
             publicURL
           }
+          dark {
+            childImageSharp {
+              fluid(maxWidth: 960, srcSetBreakpoints: [340, 680]) {
+                ...GatsbyImageSharpFluid_withWebp
+              }
+            }
+            publicURL
+          }
+          shadow
         }
         sections: section {
           title
+          component
           description
           image: sectionimage {
             light {
@@ -436,7 +483,7 @@ export const pageQuery = graphql`
               }
               publicURL
             }
-            gif {
+            animation {
               publicURL
             }
             alt

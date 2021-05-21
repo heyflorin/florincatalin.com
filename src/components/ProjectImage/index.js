@@ -10,12 +10,18 @@ const NoScriptImage = styled.img`
 
 const ProjectImage = ({ image, ...props }) => {
   const { themeName } = useContext(ThemeContext)
-
   return (
-    <figure {...props}>
+    <figure {...props} height="100%">
       {themeName &&
-        (image.gif ? (
-          <img src={image.gif.publicURL} alt={image.alt} />
+        (image.animation ? (
+          <video autoPlay loop muted playsInline alt={image.alt} width="100%">
+            <source src={image.animation.publicURL} type="video/mp4" />
+            <img
+              src={image.animation.publicURL}
+              alt={image.alt}
+              width={'100%'}
+            />
+          </video>
         ) : (
           <Image
             alt={image.alt || ''}
@@ -53,7 +59,7 @@ ProjectImage.propTypes = {
       }).isRequired,
       publicURL: PropTypes.string.isRequired
     }).isRequired,
-    gif: PropTypes.shape({
+    animation: PropTypes.shape({
       publicURL: PropTypes.string
     }),
     alt: PropTypes.string

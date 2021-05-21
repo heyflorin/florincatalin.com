@@ -1,6 +1,6 @@
 module.exports = {
   pathPrefix: '/',
-  title: 'Florin Catalin | Engineering, Design, & Product Management', // Navigation and Site Title
+  title: 'Florin Catalin | Product, Design, Engineering', // Navigation and Site Title
   titleAlt: 'Florin Catalin', // Title for JSONLD
   description: 'The personal website, portfolio, and blog of Florin Catalin.',
   headline:

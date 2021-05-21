@@ -60,6 +60,8 @@ export const fontSizes = {
 }
 
 export const spacing = {
+  '7x': '7rem',
+  '6x': '6rem',
   '5x': '5rem',
   '4x': '4rem',
   '3x': '3rem',
@@ -73,7 +75,7 @@ export const spacing = {
 }
 
 export const breakpoints = {
-  mobile: '30rem',
+  mobile: '10rem',
   tablet: '40rem',
   desktop: '64rem',
   desktopLarge: '80rem'

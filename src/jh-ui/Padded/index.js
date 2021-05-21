@@ -4,7 +4,7 @@ import { Root } from './styles'
 
 const Padded = props => <Root {...props} />
 
-const spacing = ['xs', 's', 'm', 'l', 'xl', 'xxl', '2x', '3x', '4x', '5x']
+const spacing = ['xs', 's', 'm', 'l', 'xl', 'xxl', '2x', '3x', '4x', '5x', '6x']
 
 Padded.propTypes = {
   all: PropTypes.oneOf(spacing),

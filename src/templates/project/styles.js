@@ -22,15 +22,7 @@ export const Header = styled.header`
   }
 `
 
-export const Section = styled(motion.section)`
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    padding-bottom: ${({ theme }) => theme.spacing['4x']};
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    padding: ${({ theme }) => theme.spacing['4x']} 0;
-  }
-`
+export const Section = styled(motion.section)``
 
 export const SectionContentWrap = styled.div`
   display: grid;
@@ -54,7 +46,7 @@ export const SectionDescription = styled(Text)`
   grid-column: 1 / -1;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-column: 6 / span 6;
+    grid-column: 6 / span 8;
     margin-bottom: ${({ theme }) => theme.spacing['3x']} !important;
   }
 
@@ -63,13 +55,25 @@ export const SectionDescription = styled(Text)`
   }
 `
 
-export const OverviewSection = styled(motion.section)`
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+export const OverviewSection = styled.section`
+  background-color: var(--backgroundSecondary);
+`
+
+export const OverviewSectionWrap = styled(motion.section)``
+
+export const ProjectImageWrap = styled(motion.section)`
+  grid-column: 2 / -2;
+  box-shadow: ${({ theme, shadow }) =>
+    shadow ? theme.elevations.high : 'unset'};
+  border-radius: 12px;
+  overflow: hidden;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-column: 1 / -1;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    padding: ${({ theme }) => theme.spacing['4x']} 0;
-    padding-bottom: 0;
+    grid-column: 2 / -2;
   }
 `
 
@@ -137,10 +141,21 @@ export const OverviewDescription = styled(Text)`
 `
 
 export const SectionImageWrap = styled.div`
-  grid-column: 1 / -1;
+  height: calc(100% - 4.2px);
+  grid-column: 2 / -2;
   box-shadow: ${({ theme, shadow }) =>
     shadow ? theme.elevations.high : 'unset'};
+  border-radius: 12px;
+  overflow: hidden;
 
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    box-shadow: ${({ theme, shadow }) =>
+      shadow ? theme.elevations.high : 'unset'};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    grid-column: 1 / -1;
+  }
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     grid-column: 2 / -2;
   }

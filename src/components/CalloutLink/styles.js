@@ -11,6 +11,10 @@ export const CalloutLinkWrap = styled(Card)`
     display: flex;
     align-items: stretch;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    grid-column: 1 / -1;
+  }
 `
 
 export const CalloutLinkLink = styled.a`
