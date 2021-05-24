@@ -28,6 +28,7 @@ export const ImageWrap = styled.figure`
   overflow: hidden;
   padding: 0;
   background-color: var(--backgroundSecondary);
+  max-height: 240px;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     padding: 0;

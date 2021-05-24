@@ -323,7 +323,8 @@ ProjectTemplate.propTypes = {
     light: PropTypes.shape({
       publicURL: PropTypes.string.isRequired
     }).isRequired,
-    shadow: PropTypes.bool.isRequired
+    shadow: PropTypes.bool.isRequired,
+    alt: PropTypes.string
   }).isRequired,
   sections: PropTypes.arrayOf(
     PropTypes.shape({
@@ -386,7 +387,8 @@ Project.propTypes = {
           light: PropTypes.shape({
             publicURL: PropTypes.string.isRequired
           }).isRequired,
-          shadow: PropTypes.bool.isRequired
+          shadow: PropTypes.bool.isRequired,
+          alt: PropTypes.string
         }).isRequired,
         sections: PropTypes.arrayOf(
           PropTypes.shape({
@@ -453,6 +455,7 @@ export const pageQuery = graphql`
             publicURL
           }
           shadow
+          alt
         }
         sections: section {
           title

@@ -269,6 +269,7 @@ export const workPageQuery = graphql`
                 publicURL
               }
               shadow
+              alt
             }
           }
         }

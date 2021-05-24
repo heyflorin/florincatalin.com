@@ -110,6 +110,10 @@ export const OverviewKey = styled(Text)`
 export const OverviewValue = styled(Text)`
   grid-column: 1 / -1;
 
+  @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    margin-bottom: ${({ theme }) => theme.spacing['2x']} !important;
+  }
+
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     grid-column: 1 / span 4;
     margin-bottom: ${({ theme }) => theme.spacing['3x']} !important;
