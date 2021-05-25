@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import previewStyle from '../preview-style'
 
 const AboutPagePreview = ({ entry, widgetsFor, getAsset }) => {
-  const projects = widgetsFor('involvement').getIn(['data', 'project'])
+  const components = widgetsFor('components').getIn(['data', 'component'])
   const usages = widgetsFor('what-i-use').getIn(['data', 'usage'])
   const skills = widgetsFor('skillset').getIn(['data', 'skill'])
   const image = entry.getIn(['data', 'bioimage'])
@@ -16,13 +16,13 @@ const AboutPagePreview = ({ entry, widgetsFor, getAsset }) => {
       )}
       <h1>{entry.getIn(['data', 'title'])}</h1>
       <p>{entry.getIn(['data', 'bio'])}</p>
-      <h2>{entry.getIn(['data', 'involvement', 'title'])}</h2>
-      {projects && (
+      <h2>{entry.getIn(['data', 'components', 'title'])}</h2>
+      {components && (
         <ul>
-          {projects.map((project, index) => (
+          {components.map((component, index) => (
             <li key={index}>
-              <strong>{project.toJSON().name}</strong>:{' '}
-              {project.toJSON().description}
+              <strong>{component.toJSON().name}</strong>:{' '}
+              {component.toJSON().description}
             </li>
           ))}
         </ul>

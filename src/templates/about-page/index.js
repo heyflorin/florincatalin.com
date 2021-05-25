@@ -14,6 +14,9 @@ import Seo from '../../components/seo'
 import PageTitle from '../../components/PageTitle'
 import website from '../../../website-config'
 import { shouldAnimate } from '../../helpers'
+import ContentWrap from '../../components/ContentWrap'
+import ProjectImage from '../../components/ProjectImage'
+
 import {
   AboutContentWrap,
   BioFigure,
@@ -23,13 +26,12 @@ import {
   BioText,
   HeaderContentWrap,
   HeaderWrap,
-  InvolvementWrap,
-  Project,
-  ProjectDescription,
-  ProjectLink,
-  ProjectsWrap,
-  ProjectTitle,
-  ProjectWrap,
+  ComponentsWrap,
+  Component,
+  ComponentDescription,
+  ComponentItemWrap,
+  ComponentTitle,
+  ComponentWrap,
   Skill,
   SkillsetWrap,
   SkillsWrap,
@@ -38,7 +40,16 @@ import {
   UsageLink,
   UsagesWrap,
   UsageWrap,
-  UsesWrap
+  UsesWrap,
+  Section,
+  SectionContentWrap,
+  OverviewGrid,
+  OverviewKey,
+  SectionTitle,
+  SectionDescription,
+  SectionImageWrap,
+  SectionImageCaptionWrap,
+  AboutSection
 } from './styles'
 
 const variants = {
@@ -95,9 +106,10 @@ export const AboutPageTemplate = ({
   title,
   image,
   bio,
-  involvement,
+  components,
   whatIUse,
-  skillset
+  skillset,
+  sections
 }) => (
   <>
     <Seo
@@ -170,8 +182,56 @@ export const AboutPageTemplate = ({
         </HeaderContentWrap>
       </AboutContentWrap>
     </HeaderWrap>
-    {involvement.projects.length && (
-      <InvolvementWrap aria-labelledby="involvement-label">
+    {sections.length && (
+      <AboutSection>
+        <motion.div animate="mounted" variants={variants}>
+          <ContentWrap>
+            {sections.map((section, index) => (
+              <Padded key={index} vertical="5x">
+                <Section
+                  variants={childVariants}
+                  initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
+                >
+                  <SectionContentWrap>
+                    <OverviewGrid>
+                      <Spaced bottom="s">
+                        {section.component && (
+                          <OverviewKey>
+                            <Text order="meta">{section.component}</Text>
+                          </OverviewKey>
+                        )}
+                        <SectionTitle level={2}>{section.title}</SectionTitle>
+                      </Spaced>
+                    </OverviewGrid>
+                    <SectionDescription>
+                      {section.description}
+                    </SectionDescription>
+                    {section.image && (
+                      <>
+                        <SectionImageWrap shadow={section.image.shadow}>
+                          <ProjectImage image={section.image} />
+                        </SectionImageWrap>
+                        {section.image.caption && (
+                          <SectionImageCaptionWrap>
+                            <Spaced top="s">
+                              <Text order="caption" element="figcaption">
+                                {section.image.caption}
+                              </Text>
+                            </Spaced>
+                          </SectionImageCaptionWrap>
+                        )}
+                      </>
+                    )}
+                  </SectionContentWrap>
+                </Section>
+              </Padded>
+            ))}
+          </ContentWrap>
+        </motion.div>
+      </AboutSection>
+    )}
+    {components.component.length && (
+      <ComponentsWrap aria-labelledby="components-label">
         <motion.div
           initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
           animate={{ opacity: 1, y: 0 }}
@@ -184,51 +244,45 @@ export const AboutPageTemplate = ({
         >
           <AboutContentWrap>
             <SectionHeader>
-              <Heading level={2} id="involvement-label">
-                {involvement.title || 'Involvement'}
+              <Heading level={2} id="components-label">
+                {components.title || 'Involvement'}
               </Heading>
             </SectionHeader>
-            <ProjectsWrap animate="mounted" variants={variants}>
-              {involvement.projects.map((project, index) => (
-                <ProjectWrap
+            <ComponentWrap animate="mounted" variants={variants}>
+              {components.component.map((component, index) => (
+                <ComponentItemWrap
                   key={index}
                   variants={childVariants}
                   initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
                 >
-                  <Project
+                  <Component
                     element="article"
-                    aria-labelledby={`${kebabCase(project.name)}-name`}
+                    aria-labelledby={`${kebabCase(component.name)}-name`}
                   >
-                    <ProjectLink
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ScreenReaderText>Learn more</ScreenReaderText>
-                    </ProjectLink>
                     <div>
-                      <ProjectTitle>
+                      <ComponentTitle>
                         <Spaced bottom="s">
                           <Heading
                             level={3}
-                            id={`${kebabCase(project.name)}-name`}
+                            id={`${kebabCase(component.name)}-name`}
                           >
-                            {project.name}
+                            {component.name}
                           </Heading>
                         </Spaced>
-                      </ProjectTitle>
-                      <ProjectDescription>
-                        {project.description}
-                      </ProjectDescription>
+                      </ComponentTitle>
+                      <ComponentDescription>
+                        {component.description}
+                      </ComponentDescription>
                     </div>
-                  </Project>
-                </ProjectWrap>
+                  </Component>
+                </ComponentItemWrap>
               ))}
-            </ProjectsWrap>
+            </ComponentWrap>
           </AboutContentWrap>
         </motion.div>
-      </InvolvementWrap>
+      </ComponentsWrap>
     )}
+
     {whatIUse.usages.length && (
       <UsesWrap id="uses" aria-labelledby="uses-label">
         <motion.div
@@ -281,9 +335,9 @@ export const AboutPageTemplate = ({
               <Heading level={2} color="textInverse" id="skillset-label">
                 {skillset.title || 'Skillset'}
               </Heading>
-              <Link to="/resume" arrow={true}>
+              {/* <Link to="/resume" arrow={true}>
                 View resume
-              </Link>
+              </Link> */}
             </SectionHeader>
             <SkillsWrap animate="mounted" variants={variants}>
               {skillset.skills.map((skill, index) => (
@@ -316,13 +370,39 @@ AboutPageTemplate.propTypes = {
     }).isRequired
   }).isRequired,
   bio: PropTypes.string.isRequired,
-  involvement: PropTypes.shape({
+  sections: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      component: PropTypes.string,
+      description: PropTypes.string.isRequired,
+      image: PropTypes.shape({
+        light: PropTypes.shape({
+          childImageSharp: PropTypes.shape({
+            fluid: PropTypes.object.isRequired
+          }).isRequired,
+          publicURL: PropTypes.string.isRequired
+        }).isRequired,
+        dark: PropTypes.shape({
+          childImageSharp: PropTypes.shape({
+            fluid: PropTypes.object.isRequired
+          }).isRequired,
+          publicURL: PropTypes.string.isRequired
+        }).isRequired,
+        animation: PropTypes.shape({
+          publicURL: PropTypes.string
+        }),
+        alt: PropTypes.string,
+        caption: PropTypes.string,
+        shadow: PropTypes.bool.isRequired
+      })
+    }).isRequired
+  ).isRequired,
+  components: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    projects: PropTypes.arrayOf(
+    component: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        link: PropTypes.string.isRequired
+        description: PropTypes.string.isRequired
       })
     ).isRequired
   }).isRequired,
@@ -352,9 +432,10 @@ const AboutPage = ({ location, data: { mdx: post } }) => {
     title,
     bioimage,
     bio,
-    involvement,
+    components,
     whatIUse,
-    skillset
+    skillset,
+    sections
   } = post.frontmatter
 
   return (
@@ -363,9 +444,10 @@ const AboutPage = ({ location, data: { mdx: post } }) => {
       title={title}
       image={bioimage}
       bio={bio}
-      involvement={involvement}
+      components={components}
       whatIUse={whatIUse}
       skillset={skillset}
+      sections={sections}
     />
   )
 }
@@ -382,13 +464,39 @@ AboutPage.propTypes = {
           }).isRequired
         }).isRequired,
         bio: PropTypes.string.isRequired,
-        involvement: PropTypes.shape({
+        sections: PropTypes.arrayOf(
+          PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            component: PropTypes.string,
+            description: PropTypes.string.isRequired,
+            image: PropTypes.shape({
+              light: PropTypes.shape({
+                childImageSharp: PropTypes.shape({
+                  fluid: PropTypes.object.isRequired
+                }).isRequired,
+                publicURL: PropTypes.string.isRequired
+              }).isRequired,
+              dark: PropTypes.shape({
+                childImageSharp: PropTypes.shape({
+                  fluid: PropTypes.object.isRequired
+                }).isRequired,
+                publicURL: PropTypes.string.isRequired
+              }).isRequired,
+              animation: PropTypes.shape({
+                publicURL: PropTypes.string
+              }),
+              alt: PropTypes.string,
+              caption: PropTypes.string,
+              shadow: PropTypes.bool.isRequired
+            })
+          }).isRequired
+        ).isRequired,
+        components: PropTypes.shape({
           title: PropTypes.string.isRequired,
-          projects: PropTypes.arrayOf(
+          component: PropTypes.arrayOf(
             PropTypes.shape({
               name: PropTypes.string.isRequired,
-              description: PropTypes.string.isRequired,
-              link: PropTypes.string.isRequired
+              description: PropTypes.string.isRequired
             })
           ).isRequired
         }).isRequired,
@@ -431,12 +539,48 @@ export const aboutPageQuery = graphql`
           }
         }
         bio
-        involvement {
+        components {
           title
-          projects: project {
+          component {
             name
             description
-            link
+          }
+        }
+        sections: section {
+          title
+          component
+          description
+          image: sectionimage {
+            light {
+              childImageSharp {
+                fluid(
+                  maxWidth: 960
+                  quality: 75
+                  srcSetBreakpoints: [340, 680]
+                ) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+              publicURL
+            }
+            dark {
+              childImageSharp {
+                fluid(
+                  maxWidth: 960
+                  quality: 75
+                  srcSetBreakpoints: [340, 680]
+                ) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+              publicURL
+            }
+            animation {
+              publicURL
+            }
+            alt
+            caption
+            shadow
           }
         }
         whatIUse: what_i_use {

@@ -130,7 +130,7 @@ export const IndexPageTemplate = ({ title, description, experiments }) => {
               }}
             >
               <Heading level={2} id="recent-articles-label">
-                Recent Work
+                Selected Work
               </Heading>
             </motion.div>
             <motion.div

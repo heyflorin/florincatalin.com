@@ -97,15 +97,15 @@ collections:
           - label: Bio
             name: bio
             widget: text
-          - label: Involvement
-            name: involvement
+          - label: Components
+            name: components
             widget: object
             fields:
               - label: Title
                 name: title
                 widget: string
-              - label: Project
-                name: project
+              - label: Component
+                name: component
                 widget: list
                 fields:
                   - label: Name
@@ -192,7 +192,7 @@ collections:
                     name: description
                     widget: markdown
                     minimal: true
-                    buttons: ["bulleted-list"]
+                    buttons: ['bulleted-list']
                     editorComponents: []
           - label: Education
             name: education
@@ -205,7 +205,7 @@ collections:
                 name: description
                 widget: markdown
                 minimal: true
-                buttons: ["italic"]
+                buttons: ['italic']
                 editorComponents: []
           - label: Tools
             name: tools

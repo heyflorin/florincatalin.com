@@ -236,7 +236,7 @@ export const workPageQuery = graphql`
       }
     }
     allMdx(
-      sort: { order: ASC, fields: [frontmatter___date] }
+      sort: { order: DESC, fields: [frontmatter___date] }
       filter: { frontmatter: { templateKey: { eq: "project" } } }
     ) {
       edges {
