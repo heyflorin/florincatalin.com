@@ -47,7 +47,7 @@ export const WorkIndexPageTemplate = ({ location, title, projects }) => (
     <Seo
       title={`${title} | ${website.titleAlt}`}
       pathname={location.pathname}
-      description="Stay update to date on the latest developments in HTML, CSS and Javascript. Read Jonathan Harrell's blog for tips, tricks and techniques."
+      description="Stay update to date on the latest developments in HTML, CSS and Javascript. Read Florin's blog for tips, tricks and techniques."
     />
     <WorkIndexWrap>
       <Header>

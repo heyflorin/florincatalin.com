@@ -115,7 +115,7 @@ export const AboutPageTemplate = ({
     <Seo
       title={`${title} | ${website.titleAlt}`}
       pathname={location.pathname}
-      description="Jonathan Harrell is a UI/UX designer and front-end developer. He specializes in and blogs about HTML and CSS. Learn more."
+      description="Florin Catalin is a UI/UX designer and front-end engineer. He specializes in leading cross-functional teams to build great, human-centered products. Learn more."
       banner={image.publicURL}
     />
     <HeaderWrap aria-labelledby="about-label">
@@ -130,7 +130,7 @@ export const AboutPageTemplate = ({
               >
                 <BioImage
                   fluid={image.childImageSharp.fluid}
-                  alt="Jonathan Harrell"
+                  alt="Florin Catalin"
                 />
                 {[1, 2].map(index => (
                   <BioImageBorder key={index}>
@@ -160,7 +160,7 @@ export const AboutPageTemplate = ({
             >
               <PageTitle>
                 <Heading level={1} id="about-label">
-                  {title || 'About Jonathan'}
+                  {title || 'About Florin'}
                 </Heading>
               </PageTitle>
             </motion.div>
