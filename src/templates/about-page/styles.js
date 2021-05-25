@@ -15,6 +15,7 @@ export const Section = styled(motion.section)``
 export const SectionContentWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  grid-gap: 0 3rem;
 `
 
 export const SectionTitle = styled(Heading)`
@@ -34,11 +35,11 @@ export const SectionDescription = styled(Text)`
   grid-column: 1 / -1;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-column: 6 / span 8;
+    grid-column: 5 / span 8;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-column: 6 / span 8;
+    grid-column: 5 / span 8;
   }
 `
 
