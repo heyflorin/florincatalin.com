@@ -11,6 +11,7 @@
     [headers.values]
     cache-control = 'public, max-age=360000'
 
+[[headers]]
   for = "/work/*"
     [headers.values]
     # Basic-Auth allows you to password protect your whole site.
