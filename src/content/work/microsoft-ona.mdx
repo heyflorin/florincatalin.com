@@ -15,47 +15,75 @@ coverimage:
 section:
   - title: Aligning to the Hypothesis
     component: Understand
-    description: When I joined the team, the core hypothesis had been defined. Research identified the problem as an analytical disconnect between disparate employee collaboration tools. Notably, there was no easy and effective way to collect, manage, and analyze data across all of these source. The employee experience was directly correlated to productivity and performance and was a focal point in adressing this problem. Our tool was hypothesized to bridge the gap between various collaboration datasets and bring fast, actional insights to the user through an intuitive user interface.
+    description: When I joined the team, the core hypothesis had been defined. Research identified the problem as an analytical disconnect between disparate employee collaboration tools. Notably, there was no easy and effective way to collect, manage, and analyze data across all of these sources. The employee experience was directly correlated to productivity and performance and was a focal point in adressing this problem. Our tool was hypothesized to bridge the gap between various collaboration datasets and bring fast, actionable insights to the user through an intuitive user interface.
     sectionimage:
       alt: Two personas for the ONA tool
-      caption: Overarching research performed by a sister team was levereged to further define personas specifically for ONA
+      caption: Research performed by a sister team formed the baseline to further define personas for our product.
       dark: /img/ona-personas.png
       light: /img/ona-personas.png
       shadow: false
   - title: The Employee Experience
     component: Understand
-    description: I worked with our design and research team to formulate common scenarios around the employee experience. We started by defining the high level touch points in the overarching journey, and added a dimension of emotions experienced throughout the experience lifecycle. Finally, we filled in the rest of the map with commonly occuring events, reactions, and feelings. This helped us get a better sense of what we were attempting to solve with this tool.
+    description: I worked with our design and research team to formulate common scenarios around the employee experience. We started by defining the high level touch points in the overarching journey, and added a dimension of emotions experienced throughout the employee lifecycle. Finally, we filled in the rest of the map with commonly occuring events, reactions, and feelings. This helped us get a better sense of what we were attempting to solve with this tool.
     sectionimage:
       alt: Employee experience journey maps
-      caption: The y-axis shows the employee's quality of experience over time, overlaid with descriptive touchpoints on the graph
+      caption: The y-axis shows the employee's quality of experience over time, with descriptive touchpoints overlaid on the graph.
       dark: /img/ona-employee.png
       light: /img/ona-employee.png
       shadow: false
   - title: User Interaction Flow
     component: Explore
-    description: As each feature of the product was being built, the lead UX designer and I would break the user tasks down and assess where each task fit into the overall user flow. This diagram helped us ask detailed questions about the goals of our user, before adding complexity to the rest of the product.
+    description: As our team received requests for new features and at the completion of each feature build, the lead designer and I would break the user tasks down and assess where each fit into the overall user interaction flow. This diagram helped us ask detailed questions about the goals of our user before adding complexity to the rest of the product.
     sectionimage:
-      alt: User flows were built in Figma
+      alt: User flows were built and maintained in Figma
       dark: /img/ona-flow.png
       light: /img/ona-flow.png
       shadow: false
   - title: Starting With Low Fidelity
     component: Explore
-    description: As requests came in for new features, low fidelity wireframes were pivotal in refining and validating user requirements; which often came in fast and unfiltered. This helped our UX team and Product Managers pass signal to the engineering team, rather than noise. This excercise was particularly useful as a hybrid designer/developer and increased the speed and accuracy with which we delivered features.
+    description: Low fidelity wireframes were instrumental in refining and validating user requirements; which often came in fast and unfiltered. This helped our UX team and Product Managers pass signal to the engineering team, rather than noise. This exercise was particularly useful to me as a hybrid designer/developer and it increased the speed and accuracy with which we delivered features.
     sectionimage:
-      alt: Two low fidelity wireframe examples for ONA
-      caption: Low fidelity wireframes were created in Figma, on paper, and on whiteboards
+      alt: Two low fidelity wireframe examples
+      caption: Low fidelity wireframes were created using Figma, paper, and whiteboards.
       dark: /img/ona-wireframes.png
       light: /img/ona-wireframes.png
       shadow: false
-  - title: Improving & Evolving the Experience
+  - title: Improving & Evolving the UI
     component: Materlialize
-    description: The intial build of the user interface was technically functional, but lacked context, affordances, tooltips, and controls. The tool displayed metrics and measures that were unfamiliar to even the most technical analyists, and the customer team reported that users felt like it was a tool built by Data Scientists for Data Scientists. We set out to build a more intuitive UI, with an added dark mode, helpful dialogs, and advanced controls.
+    description: The intial build of the user interface was technically functional, but lacked context, affordances, helpful tooltips, and advanced controls. The tool displayed metrics and measures that were unfamiliar to even the most technical analyists, and the customer team reported that users felt like it was a tool built by Data Scientists for Data Scientists. We set out to build a more intuitive UI, added a dark mode, helpful coach marks and tooltips, and advanced controls. My role involved early UX design and leading UI implementation.
     sectionimage:
-      alt: Testing Schwabe's virtual photo booth
+      alt: Before and after view of the grouped network graph UI
+      caption: The second image shows an earlier version of the UI. Dark mode was added to reduce eye fatigue and assist in visual parsing of color-based data encoding.
       dark: /img/ona-before.png
       light: /img/ona-before.png
       shadow: false
+  - title: Network Insights & Advanced Controls
+    component: Materlialize
+    description: A common request from our user interviews was for the ability to actually “see” their organization’s communication habits. I worked with our Data Science team and our Lead UX Designer to prototype and implement an interactive network graph that shows every person within an organization, and who they communicate with via Microsoft Office communication tools. The UI allows for the analyst to color their network based on specific human resource attributes, so they can focus their analysis on their specific areas of interest. It also gives metrics relevant to data-driven managers on their organization’s stability, connectivity, and cohesion, without having to decipher more complicated data tables.
+    sectionimage:
+      alt: A view of the organizational network graph and UI
+      caption: The product is built using TypeScript & React. The network graph components utilize the KeyLines graphing library by Cambridge Intelligence.
+      dark: /img/ona-adv-colors.png
+      light: /img/ona-adv-colors.png
+      shadow: true
+  - title: Communication Flow
+    component: Materlialize
+    description: Communication Flow gives managers and analysts the ability to categorize all of their organization’s meetings and emails into buckets using topic modeling and natural language processing. I worked with designers and product managers to design and implement a tool that gives users the ability to focus on specific groups of an organization like roles or departments, and which topics are of interest. The network graph that is generated shows links based on the categories selected, and allows the user to scrub to a specific time range.
+    sectionimage:
+      alt: A view of the Communication Flow feature
+      caption: The time-based animation feature was a successfull “moon shot". The user can press play on the time series controls to see how the communication on a topic spreads over time.
+      dark: /img/ona-comm-flow.png
+      light: /img/ona-comm-flow.png
+      shadow: true
+  - title: Ensuring Performance With Graph Settings
+    component: Materlialize
+    description: A big challenge we ran into was maintaining consistent browser performance, which involved reducing edge occlusion on the graph. We often had to choose between limiting the product's capability versus increasing the complexity of the user experience. One way we were able to ensure performance was to design the graph controls in a way that guided the user to select more reasonable amounts of data to analyze and graph. We accomplished this by creating clear and intuitively grouped controls. We also allowed the user to save graphs once they achieved a useful configuration and allowed them to edit the settings of saved graphs.
+    sectionimage:
+      alt: A screenshot of the configuration panel for ONA
+      caption: We interviewed existing users to identify which grouping attributes were used most often, and limited the amount to 5 in order to maintain a performant graph.
+      dark: /img/ona-adv-controls.png
+      light: /img/ona-adv-controls.png
+      shadow: true
   - title: Results & Impact
-    description: The virtual photobooth continued the tradition of unexpected creative execution. The Snapchat-esque photobooth experience and customized photobooth props and photo sharing/saving features were well received by Schwabe's clients, garnering favorable feedback and engagement. The interactive greeting won a dotCOMM Award for Interactive Capabilities in the Website Creativity category.
+    description: The product started as an initial MVP and evolved into a full fledged custom solution offered to Microsoft's largest enterprise clients. The tool was deployed to over 25 large scale customers. What began as an experiment has elvolved into a full fledged offering that gives organizations the visibility to increase the employee experience and thus, performance and productivity. The product continues to garner positive feedback and has a full backlog of feature requests.
 ---
