@@ -60,9 +60,9 @@ export const OverviewSection = styled.div`
   background-color: var(--backgroundSecondary);
 `
 
-export const OverviewSectionWrap = styled(motion.section)``
+export const OverviewSectionWrap = styled(motion.div)``
 
-export const ProjectImageWrap = styled(motion.section)`
+export const ProjectImageWrap = styled(motion.div)`
   grid-column: 2 / -2;
   box-shadow: ${({ theme, shadow }) =>
     shadow ? theme.elevations.high : 'unset'};
