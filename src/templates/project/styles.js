@@ -5,7 +5,7 @@ import Heading from '../../jh-ui/Heading'
 import Button from '../../jh-ui/Button'
 import Input from '../../jh-ui/Input'
 
-export const ProjectWrap = styled.div`
+export const ProjectWrap = styled.article`
   flex: 1;
   background-color: var(--backgroundPrimary);
 `
@@ -56,7 +56,7 @@ export const SectionDescription = styled(Text)`
   }
 `
 
-export const OverviewSection = styled.section`
+export const OverviewSection = styled.div`
   background-color: var(--backgroundSecondary);
 `
 
