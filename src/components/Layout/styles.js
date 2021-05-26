@@ -27,7 +27,7 @@ export const Main = styled.main`
   flex-direction: column;
   flex: 1;
   box-shadow: none;
-  & div {
+  & > div {
     overflow: hidden;
   }
 `

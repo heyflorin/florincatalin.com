@@ -347,7 +347,7 @@ export const AboutPageTemplate = ({
                   initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
                 >
                   <Skill hoverable={false}>
-                    <Heading level={3} color="textInverse" element="p">
+                    <Heading level={4} color="textInverse" element="p">
                       {skill.name}
                     </Heading>
                   </Skill>

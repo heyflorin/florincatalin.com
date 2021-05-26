@@ -378,6 +378,7 @@ export const SkillWrap = styled(motion.li)`
 export const Skill = styled(Card)`
   height: 100%;
   background-color: var(--backgroundElevatedInverse);
+  text-align: center;
 
   h3 {
     color: var(--textInverse);
