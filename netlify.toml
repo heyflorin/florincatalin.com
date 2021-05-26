@@ -12,7 +12,7 @@
     cache-control = 'public, max-age=360000'
 
 [[headers]]
-  for = "/"
+  for = "/*"
     [headers.values]
     # Basic-Auth allows you to password protect your whole site.
     # This feature may not be available on all plans.
