@@ -78,74 +78,70 @@ export const WorkIndexPageTemplate = ({ location, title, projects }) => {
         </Header>
         {projects.length && (
           <section>
-            <Spaced bottom="5x">
-              <motion.div animate="mounted" variants={variants}>
-                {projects.map(({ node: project }, index) => (
-                  <Project
-                    key={project.id}
-                    variants={childVariants}
-                    initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
-                    odd={(index + 1) % 2 !== 0}
-                    aria-labelledby={`${kebabCase(
-                      project.frontmatter.title
-                    )}-label`}
-                  >
-                    <ContentWrap>
-                      <Padded vertical="3x">
-                        <ProjectContentWrap>
-                          <Spaced bottom="2x">
-                            <ProjectImageWrap
-                              shadow={project.frontmatter.image.shadow}
-                              reverse={(index + 1) % 2 === 0}
+            <motion.div animate="mounted" variants={variants}>
+              {projects.map(({ node: project }, index) => (
+                <Project
+                  key={project.id}
+                  variants={childVariants}
+                  initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
+                  odd={(index + 1) % 2 !== 0}
+                  aria-labelledby={`${kebabCase(
+                    project.frontmatter.title
+                  )}-label`}
+                >
+                  <ContentWrap>
+                    <Padded vertical="3x">
+                      <ProjectContentWrap>
+                        <Spaced bottom="2x">
+                          <ProjectImageWrap
+                            shadow={project.frontmatter.image.shadow}
+                            reverse={(index + 1) % 2 === 0}
+                          >
+                            <ProjectImage image={project.frontmatter.image} />
+                          </ProjectImageWrap>
+                        </Spaced>
+                        <ProjectText reverse={(index + 1) % 2 === 0}>
+                          <header>
+                            <Text order="meta">{project.frontmatter.role}</Text>
+                            <Heading
+                              level={2}
+                              id={`${kebabCase(
+                                project.frontmatter.title
+                              )}-label`}
                             >
-                              <ProjectImage image={project.frontmatter.image} />
-                            </ProjectImageWrap>
+                              {project.frontmatter.title}
+                            </Heading>
+                          </header>
+                          <Spaced top="xl">
+                            <Text>{project.frontmatter.description}</Text>
+                            <Button
+                              order="primary"
+                              to={project.fields.slug}
+                              as={GatsbyLink}
+                            >
+                              Learn more
+                              {project.frontmatter.locked && isLocked && (
+                                <Spaced left="s">
+                                  <Lock size={15} />
+                                </Spaced>
+                              )}
+                              {project.frontmatter.locked && !isLocked && (
+                                <Spaced left="s">
+                                  <Unlock size={15} />
+                                </Spaced>
+                              )}
+                              <ScreenReaderText>
+                                about this article
+                              </ScreenReaderText>
+                            </Button>
                           </Spaced>
-                          <ProjectText reverse={(index + 1) % 2 === 0}>
-                            <header>
-                              <Text order="meta">
-                                {project.frontmatter.role}
-                              </Text>
-                              <Heading
-                                level={2}
-                                id={`${kebabCase(
-                                  project.frontmatter.title
-                                )}-label`}
-                              >
-                                {project.frontmatter.title}
-                              </Heading>
-                            </header>
-                            <Spaced top="xl">
-                              <Text>{project.frontmatter.description}</Text>
-                              <Button
-                                order="primary"
-                                to={project.fields.slug}
-                                as={GatsbyLink}
-                              >
-                                Learn more
-                                {project.frontmatter.locked && isLocked && (
-                                  <Spaced left="s">
-                                    <Lock size={15} />
-                                  </Spaced>
-                                )}
-                                {project.frontmatter.locked && !isLocked && (
-                                  <Spaced left="s">
-                                    <Unlock size={15} />
-                                  </Spaced>
-                                )}
-                                <ScreenReaderText>
-                                  about this article
-                                </ScreenReaderText>
-                              </Button>
-                            </Spaced>
-                          </ProjectText>
-                        </ProjectContentWrap>
-                      </Padded>
-                    </ContentWrap>
-                  </Project>
-                ))}
-              </motion.div>
-            </Spaced>
+                        </ProjectText>
+                      </ProjectContentWrap>
+                    </Padded>
+                  </ContentWrap>
+                </Project>
+              ))}
+            </motion.div>
           </section>
         )}
       </WorkIndexWrap>
