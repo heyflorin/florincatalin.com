@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -18,7 +18,8 @@ import ProjectImage from '../../components/ProjectImage'
 import CalloutLink from '../../components/CalloutLink'
 import ThemeContext from '../../context/theme'
 import website from '../../../website-config'
-import { shouldAnimate } from '../../helpers'
+import { addAlert, shouldAnimate } from '../../helpers'
+import Alert from '../../jh-ui/Alert'
 import {
   CloseButton,
   Header,
@@ -39,7 +40,11 @@ import {
   OverviewGrid,
   SectionTitle,
   ThemeAlertContentWrap,
-  ProjectImageWrap
+  ProjectImageWrap,
+  SubscribeForm,
+  SubscribeFormContent,
+  SubscribeInput,
+  SubscribeButton
 } from './styles'
 
 const variants = {
@@ -70,11 +75,18 @@ export const ProjectTemplate = ({
   products,
   link,
   coverImage,
-  sections
+  sections,
+  locked
 }) => {
   const { themeName, setTheme } = useContext(ThemeContext)
+  const [isLocked, setLocked] = useState(null)
   const [themeAlertVisible, setThemeAlertVisible] = useState(false)
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(null)
+  const inputRef = useRef()
+
   useEffect(() => {
+    if (locked) setLocked(!localStorage.getItem('isUnlocked'))
     // Check if a there are separate dark/light variations of section images
     if (
       sections.some(
@@ -88,7 +100,6 @@ export const ProjectTemplate = ({
     ) {
       try {
         const themeAlertDismissed = localStorage.getItem('themeAlertDismissed')
-        console.log('themeAlertDismissed', themeAlertDismissed)
         setThemeAlertVisible(!themeAlertDismissed)
       } catch (error) {
         setThemeAlertVisible(true)
@@ -105,6 +116,23 @@ export const ProjectTemplate = ({
   const dismissThemeAlert = () => {
     setThemeAlertVisible(false)
     localStorage.setItem('themeAlertDismissed', 'true')
+  }
+
+  const handleUnlock = event => {
+    setError(null)
+    event.preventDefault()
+
+    const formData = new FormData(event.target)
+    const password = formData.get('password')
+
+    if (password === process.env.GATSBY_LOCKED_CONTENT_KEY) {
+      setLocked(false)
+      setSuccess(true)
+      localStorage.setItem('isUnlocked', 'true')
+      addAlert('Password accepted')
+    } else {
+      setError('You entered an incorrect password, please try again.')
+    }
   }
 
   return (
@@ -166,114 +194,197 @@ export const ProjectTemplate = ({
             </Padded>
           </ContentWrap>
         </Header>
-        <OverviewSection>
-          <motion.div animate="mounted" variants={variants}>
-            <ContentWrap>
-              <Padded vertical="5x">
-                <OverviewSectionWrap
-                  variants={childVariants}
-                  initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
-                >
-                  <OverviewContentWrap>
-                    <OverviewGrid>
-                      <Spaced bottom="xs">
-                        <OverviewKey>
-                          <Text order="meta">Client</Text>
-                        </OverviewKey>
-                        <OverviewValue>{client}</OverviewValue>
-                      </Spaced>
-                      <Spaced bottom="xs">
-                        <OverviewKey>
-                          <Text order="meta">Products</Text>
-                        </OverviewKey>
-                        <OverviewValue>{products}</OverviewValue>
-                      </Spaced>
-                    </OverviewGrid>
-                    <Spaced bottom="2x">
-                      <OverviewDescription>
-                        <Spaced bottom="xs">
-                          <OverviewKey>
-                            <Text order="meta">Overview</Text>
-                          </OverviewKey>
-                          <OverviewValue>{description}</OverviewValue>{' '}
-                        </Spaced>
-                      </OverviewDescription>
-                    </Spaced>
-                    {coverImage && (
-                      <Spaced bottom="2x">
-                        <ProjectImageWrap shadow={coverImage.shadow}>
-                          <ProjectImage image={coverImage} />
-                        </ProjectImageWrap>
-                      </Spaced>
-                    )}
-                    {link && link.url && link.title && (
-                      <CalloutLink
-                        url={link.url}
-                        title={link.title}
-                        description="View this project live on the web"
+        {isLocked && (
+          <>
+            <Spaced top="xl">
+              <SubscribeForm onSubmit={handleUnlock}>
+                <div>
+                  <SubscribeFormContent>
+                    <div>
+                      <label htmlFor="email" className="visually-hidden">
+                        Enter password
+                      </label>
+                      <SubscribeInput
+                        id="password"
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        ref={inputRef}
                       />
+                    </div>
+                    <Spaced top="m">
+                      <SubscribeButton order="accent" size="large">
+                        Unlock
+                      </SubscribeButton>
+                    </Spaced>
+                  </SubscribeFormContent>
+                  <AnimatePresence>
+                    {error && (
+                      <motion.div
+                        initial={
+                          shouldAnimate() ? { opacity: 0, y: 50 } : false
+                        }
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 50 }}
+                        transition={{
+                          type: 'spring',
+                          stiffness: 50,
+                          mass: 0.1,
+                          delay: 0.1
+                        }}
+                      >
+                        <Spaced top="m">
+                          <Alert>{error}</Alert>
+                        </Spaced>
+                      </motion.div>
                     )}
-                  </OverviewContentWrap>
-                </OverviewSectionWrap>
-              </Padded>
-            </ContentWrap>
-          </motion.div>
-        </OverviewSection>
-        {sections.length && (
-          <section>
-            <motion.div animate="mounted" variants={variants}>
-              <ContentWrap>
-                {sections.map((section, index) => (
-                  <Padded key={index} vertical="5x">
-                    <Section
+                  </AnimatePresence>
+                  <AnimatePresence>
+                    {success && (
+                      <motion.div
+                        initial={
+                          shouldAnimate() ? { opacity: 0, y: 50 } : false
+                        }
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 50 }}
+                        transition={{
+                          type: 'spring',
+                          stiffness: 50,
+                          mass: 0.1,
+                          delay: 0.1
+                        }}
+                      >
+                        <Spaced top="m">
+                          <Alert order="info">Unlocking the case study</Alert>
+                        </Spaced>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </SubscribeForm>
+            </Spaced>
+          </>
+        )}
+        {!isLocked && (
+          <>
+            <OverviewSection>
+              <motion.div animate="mounted" variants={variants}>
+                <ContentWrap>
+                  <Padded vertical="5x">
+                    <OverviewSectionWrap
                       variants={childVariants}
                       initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
                     >
-                      <SectionContentWrap>
+                      <OverviewContentWrap>
                         <OverviewGrid>
-                          <Spaced bottom="s">
-                            {section.component && (
-                              <OverviewKey>
-                                <Text order="meta">{section.component}</Text>
-                              </OverviewKey>
-                            )}
-                            <SectionTitle level={2}>
-                              {section.title}
-                            </SectionTitle>
+                          <Spaced bottom="xs">
+                            <OverviewKey>
+                              <Text order="meta">Client</Text>
+                            </OverviewKey>
+                            <OverviewValue>{client}</OverviewValue>
+                          </Spaced>
+                          <Spaced bottom="xs">
+                            <OverviewKey>
+                              <Text order="meta">Products</Text>
+                            </OverviewKey>
+                            <OverviewValue>{products}</OverviewValue>
                           </Spaced>
                         </OverviewGrid>
                         <Spaced bottom="2x">
-                          <SectionDescription>
-                            {section.description}
-                          </SectionDescription>
+                          <OverviewDescription>
+                            <Spaced bottom="xs">
+                              <OverviewKey>
+                                <Text order="meta">Overview</Text>
+                              </OverviewKey>
+                              <OverviewValue>{description}</OverviewValue>{' '}
+                            </Spaced>
+                          </OverviewDescription>
                         </Spaced>
-                        {section.image && (
-                          <>
-                            <SectionImageWrap shadow={section.image.shadow}>
-                              <ProjectImage image={section.image} />
-                            </SectionImageWrap>
-                            {section.image.caption && (
-                              <SectionImageCaptionWrap>
-                                <Spaced top="s">
-                                  <Text order="caption" element="figcaption">
-                                    {section.image.caption}
-                                  </Text>
-                                </Spaced>
-                              </SectionImageCaptionWrap>
-                            )}
-                          </>
+                        {coverImage && (
+                          <Spaced bottom="2x">
+                            <ProjectImageWrap shadow={coverImage.shadow}>
+                              <ProjectImage image={coverImage} />
+                            </ProjectImageWrap>
+                          </Spaced>
                         )}
-                      </SectionContentWrap>
-                    </Section>
+                        {link && link.url && link.title && (
+                          <CalloutLink
+                            url={link.url}
+                            title={link.title}
+                            description="View this project live on the web"
+                          />
+                        )}
+                      </OverviewContentWrap>
+                    </OverviewSectionWrap>
                   </Padded>
-                ))}
-              </ContentWrap>
-            </motion.div>
-          </section>
+                </ContentWrap>
+              </motion.div>
+            </OverviewSection>
+
+            {sections.length && (
+              <section>
+                <motion.div animate="mounted" variants={variants}>
+                  <ContentWrap>
+                    {sections.map((section, index) => (
+                      <Padded key={index} vertical="5x">
+                        <Section
+                          variants={childVariants}
+                          initial={
+                            shouldAnimate() ? { opacity: 0, y: 50 } : false
+                          }
+                        >
+                          <SectionContentWrap>
+                            <OverviewGrid>
+                              <Spaced bottom="s">
+                                {section.component && (
+                                  <OverviewKey>
+                                    <Text order="meta">
+                                      {section.component}
+                                    </Text>
+                                  </OverviewKey>
+                                )}
+                                <SectionTitle level={2}>
+                                  {section.title}
+                                </SectionTitle>
+                              </Spaced>
+                            </OverviewGrid>
+                            <Spaced bottom="2x">
+                              <SectionDescription>
+                                {section.description}
+                              </SectionDescription>
+                            </Spaced>
+                            {section.image && (
+                              <>
+                                <SectionImageWrap shadow={section.image.shadow}>
+                                  <ProjectImage image={section.image} />
+                                </SectionImageWrap>
+                                {section.image.caption && (
+                                  <SectionImageCaptionWrap>
+                                    <Spaced top="s">
+                                      <Text
+                                        order="caption"
+                                        element="figcaption"
+                                      >
+                                        {section.image.caption}
+                                      </Text>
+                                    </Spaced>
+                                  </SectionImageCaptionWrap>
+                                )}
+                              </>
+                            )}
+                          </SectionContentWrap>
+                        </Section>
+                      </Padded>
+                    ))}
+                  </ContentWrap>
+                </motion.div>
+              </section>
+            )}
+          </>
         )}
 
         <AnimatePresence>
-          {themeAlertVisible && (
+          {!isLocked && themeAlertVisible && (
             <LightThemeAlertWrap
               initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
               animate={{ opacity: 1, y: 0 }}
@@ -366,6 +477,7 @@ const Project = ({ location, data: { mdx: post } }) => (
     link={post.frontmatter.link}
     coverImage={post.frontmatter.coverImage}
     sections={post.frontmatter.sections}
+    locked={post.frontmatter.locked}
   />
 )
 
@@ -379,6 +491,7 @@ Project.propTypes = {
         role: PropTypes.string.isRequired,
         client: PropTypes.string.isRequired,
         products: PropTypes.string.isRequired,
+        locked: PropTypes.boolean,
         link: PropTypes.shape({
           url: PropTypes.string,
           title: PropTypes.string
@@ -433,6 +546,7 @@ export const pageQuery = graphql`
         role
         client
         products
+        locked
         link: link {
           url
           title

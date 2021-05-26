@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import Text from '../../jh-ui/Text'
 import Heading from '../../jh-ui/Heading'
 import Button from '../../jh-ui/Button'
+import Input from '../../jh-ui/Input'
 
 export const ProjectWrap = styled.div`
   flex: 1;
@@ -214,4 +215,21 @@ export const CloseButton = styled(Button)`
   border: 0;
   background-color: var(--backgroundTertiary);
   color: var(--text);
+`
+
+export const SubscribeForm = styled.form``
+export const SubscribeFormContent = styled.div`
+  display: flex;
+  justify-content: center;
+`
+export const SubscribeInput = styled(Input)`
+  width: 20rem;
+  max-width: 100%;
+  background-color: var(--backgroundInverse);
+  color: var(--textInverse);
+`
+export const SubscribeButton = styled(Button)`
+  margin-top: 0 !important;
+  margin-left: ${({ theme }) => theme.spacing.m};
+  border-radius: 4px;
 `

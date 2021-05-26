@@ -33,9 +33,7 @@ export default class HeaderScene {
       // window.addEventListener('load', this.init, false)
 
       this.loop()
-    } catch (error) {
-      console.log('Scene create error', error)
-    }
+    } catch (error) {}
   }
 
   updateFog = theme => {
@@ -227,7 +225,6 @@ export default class HeaderScene {
     this.scene.traverse(object => {
       if (!object.isMesh) return
 
-      console.log('dispose geometry!')
       object.geometry.dispose()
 
       if (object.material.isMaterial) {
@@ -239,14 +236,12 @@ export default class HeaderScene {
     })
 
     const cleanMaterial = material => {
-      console.log('dispose material!')
       material.dispose()
 
       // dispose textures
       for (const key of Object.keys(material)) {
         const value = material[key]
         if (value && typeof value === 'object' && 'minFilter' in value) {
-          console.log('dispose texture!')
           value.dispose()
         }
       }

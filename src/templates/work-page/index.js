@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { graphql, Link as GatsbyLink } from 'gatsby'
 import kebabCase from 'lodash/kebabCase'
@@ -15,6 +15,8 @@ import PageTitle from '../../components/PageTitle'
 import ProjectImage from '../../components/ProjectImage'
 import website from '../../../website-config'
 import { shouldAnimate } from '../../helpers'
+import { Lock, Unlock } from 'react-feather'
+
 import {
   Header,
   Project,
@@ -42,94 +44,114 @@ const childVariants = {
   }
 }
 
-export const WorkIndexPageTemplate = ({ location, title, projects }) => (
-  <>
-    <Seo
-      title={`${title} | ${website.titleAlt}`}
-      pathname={location.pathname}
-      description="Stay update to date on the latest developments in HTML, CSS and Javascript. Read Florin's blog for tips, tricks and techniques."
-    />
-    <WorkIndexWrap>
-      <Header>
-        <ContentWrap>
-          <Padded vertical="3x">
-            <div>
-              <motion.div
-                initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ type: 'spring', stiffness: 50, mass: 0.1 }}
-              >
-                <PageTitle>
-                  <Heading level={1}>{title || 'Work'}</Heading>
-                </PageTitle>
-              </motion.div>
-            </div>
-          </Padded>
-        </ContentWrap>
-      </Header>
-      {projects.length && (
-        <section>
-          <Spaced bottom="5x">
-            <motion.div animate="mounted" variants={variants}>
-              {projects.map(({ node: project }, index) => (
-                <Project
-                  key={project.id}
-                  variants={childVariants}
+export const WorkIndexPageTemplate = ({ location, title, projects }) => {
+  const [isLocked, setLocked] = useState(true)
+
+  useEffect(() => {
+    setLocked(!localStorage.getItem('isUnlocked'))
+  }, [])
+
+  return (
+    <>
+      <Seo
+        title={`${title} | ${website.titleAlt}`}
+        pathname={location.pathname}
+        description="Stay update to date on the latest developments in HTML, CSS and Javascript. Read Florin's blog for tips, tricks and techniques."
+      />
+      <WorkIndexWrap>
+        <Header>
+          <ContentWrap>
+            <Padded vertical="3x">
+              <div>
+                <motion.div
                   initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
-                  odd={(index + 1) % 2 !== 0}
-                  aria-labelledby={`${kebabCase(
-                    project.frontmatter.title
-                  )}-label`}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ type: 'spring', stiffness: 50, mass: 0.1 }}
                 >
-                  <ContentWrap>
-                    <Padded vertical="3x">
-                      <ProjectContentWrap>
-                        <Spaced bottom="2x">
-                          <ProjectImageWrap
-                            shadow={project.frontmatter.image.shadow}
-                            reverse={(index + 1) % 2 === 0}
-                          >
-                            <ProjectImage image={project.frontmatter.image} />
-                          </ProjectImageWrap>
-                        </Spaced>
-                        <ProjectText reverse={(index + 1) % 2 === 0}>
-                          <header>
-                            <Text order="meta">{project.frontmatter.role}</Text>
-                            <Heading
-                              level={2}
-                              id={`${kebabCase(
-                                project.frontmatter.title
-                              )}-label`}
+                  <PageTitle>
+                    <Heading level={1}>{title || 'Work'}</Heading>
+                  </PageTitle>
+                </motion.div>
+              </div>
+            </Padded>
+          </ContentWrap>
+        </Header>
+        {projects.length && (
+          <section>
+            <Spaced bottom="5x">
+              <motion.div animate="mounted" variants={variants}>
+                {projects.map(({ node: project }, index) => (
+                  <Project
+                    key={project.id}
+                    variants={childVariants}
+                    initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
+                    odd={(index + 1) % 2 !== 0}
+                    aria-labelledby={`${kebabCase(
+                      project.frontmatter.title
+                    )}-label`}
+                  >
+                    <ContentWrap>
+                      <Padded vertical="3x">
+                        <ProjectContentWrap>
+                          <Spaced bottom="2x">
+                            <ProjectImageWrap
+                              shadow={project.frontmatter.image.shadow}
+                              reverse={(index + 1) % 2 === 0}
                             >
-                              {project.frontmatter.title}
-                            </Heading>
-                          </header>
-                          <Spaced top="xl">
-                            <Text>{project.frontmatter.description}</Text>
-                            <Button
-                              order="primary"
-                              to={project.fields.slug}
-                              as={GatsbyLink}
-                            >
-                              Learn more
-                              <ScreenReaderText>
-                                about this article
-                              </ScreenReaderText>
-                            </Button>
+                              <ProjectImage image={project.frontmatter.image} />
+                            </ProjectImageWrap>
                           </Spaced>
-                        </ProjectText>
-                      </ProjectContentWrap>
-                    </Padded>
-                  </ContentWrap>
-                </Project>
-              ))}
-            </motion.div>
-          </Spaced>
-        </section>
-      )}
-    </WorkIndexWrap>
-  </>
-)
+                          <ProjectText reverse={(index + 1) % 2 === 0}>
+                            <header>
+                              <Text order="meta">
+                                {project.frontmatter.role}
+                              </Text>
+                              <Heading
+                                level={2}
+                                id={`${kebabCase(
+                                  project.frontmatter.title
+                                )}-label`}
+                              >
+                                {project.frontmatter.title}
+                              </Heading>
+                            </header>
+                            <Spaced top="xl">
+                              <Text>{project.frontmatter.description}</Text>
+                              <Button
+                                order="primary"
+                                to={project.fields.slug}
+                                as={GatsbyLink}
+                              >
+                                Learn more
+                                {project.frontmatter.locked && isLocked && (
+                                  <Spaced left="s">
+                                    <Lock size={15} />
+                                  </Spaced>
+                                )}
+                                {project.frontmatter.locked && !isLocked && (
+                                  <Spaced left="s">
+                                    <Unlock size={15} />
+                                  </Spaced>
+                                )}
+                                <ScreenReaderText>
+                                  about this article
+                                </ScreenReaderText>
+                              </Button>
+                            </Spaced>
+                          </ProjectText>
+                        </ProjectContentWrap>
+                      </Padded>
+                    </ContentWrap>
+                  </Project>
+                ))}
+              </motion.div>
+            </Spaced>
+          </section>
+        )}
+      </WorkIndexWrap>
+    </>
+  )
+}
 
 WorkIndexPageTemplate.propTypes = {
   location: PropTypes.object.isRequired,
@@ -202,6 +224,7 @@ WorkIndexPage.propTypes = {
               role: PropTypes.string.isRequired,
               client: PropTypes.string.isRequired,
               products: PropTypes.string.isRequired,
+              locked: PropTypes.string,
               description: PropTypes.string.isRequired,
               image: PropTypes.shape({
                 light: PropTypes.shape({
@@ -250,6 +273,7 @@ export const workPageQuery = graphql`
             role
             client
             products
+            locked
             description
             image: coverimage {
               light {
