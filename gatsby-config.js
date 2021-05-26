@@ -183,6 +183,15 @@ module.exports = {
       }
     },
     'gatsby-plugin-offline',
+    {
+      // keep as first gatsby-source-filesystem plugin for gatsby image support
+      resolve: 'gatsby-plugin-netlify',
+      options: {
+        headers: {
+          '/work/*': ['Basic-Auth: admin:password']
+        }
+      }
+    },
     'gatsby-plugin-netlify' // make sure to keep it last in the array
   ]
 }
