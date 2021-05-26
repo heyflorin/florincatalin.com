@@ -12,11 +12,11 @@
     cache-control = 'public, max-age=360000'
 
 [[headers]]
-  for = "/work/*"
+  for = "/"
     [headers.values]
     # Basic-Auth allows you to password protect your whole site.
     # This feature may not be available on all plans.
-    Basic-Auth = "teamflow:letsgo"
+    Basic-Auth = "teamflow:letsgo florin:letsgo"
 
 [[plugins]]
   package = "netlify-plugin-gatsby-cache"
