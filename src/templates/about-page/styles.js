@@ -16,6 +16,10 @@ export const SectionContentWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-gap: 0 3rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    grid-gap: 0;
+  }
 `
 
 export const SectionTitle = styled(Heading)`
