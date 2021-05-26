@@ -49,7 +49,7 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     min-width: 20rem;
     ${({ withBackground }) =>
-      withBackground && 'background-color: var(--backgroundBody)'};
+      withBackground && 'background-color: var(--backgroundPrimary)'};
     font-family: ${({ theme }) => theme.fonts.sansSerif};
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
