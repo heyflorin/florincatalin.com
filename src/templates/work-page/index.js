@@ -119,7 +119,7 @@ export const WorkIndexPageTemplate = ({ location, title, projects }) => {
                               to={project.fields.slug}
                               as={GatsbyLink}
                             >
-                              Learn more
+                              View case study
                               {project.frontmatter.locked && isLocked && (
                                 <Spaced left="s">
                                   <Lock size={15} />
