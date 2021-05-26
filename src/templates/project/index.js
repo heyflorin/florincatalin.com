@@ -242,9 +242,11 @@ export const ProjectTemplate = ({
                           delay: 0.1
                         }}
                       >
-                        <Spaced top="m">
-                          <Alert>{error}</Alert>
-                        </Spaced>
+                        <ContentWrap>
+                          <Spaced top="m">
+                            <Alert>{error}</Alert>
+                          </Spaced>
+                        </ContentWrap>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -276,60 +278,73 @@ export const ProjectTemplate = ({
         )}
         {!isLocked && (
           <>
-            <OverviewSection>
-              <motion.div animate="mounted" variants={variants}>
-                <ContentWrap>
-                  <Padded vertical="5x">
-                    <OverviewSectionWrap
-                      variants={childVariants}
-                      initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
-                    >
-                      <OverviewContentWrap>
-                        <OverviewGrid>
-                          <Spaced bottom="xs">
-                            <OverviewKey>
-                              <Text order="meta">Client</Text>
-                            </OverviewKey>
-                            <OverviewValue>{client}</OverviewValue>
-                          </Spaced>
-                          <Spaced bottom="xs">
-                            <OverviewKey>
-                              <Text order="meta">Products</Text>
-                            </OverviewKey>
-                            <OverviewValue>{products}</OverviewValue>
-                          </Spaced>
-                        </OverviewGrid>
-                        <Spaced bottom="2x">
-                          <OverviewDescription>
+            <motion.div
+              initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              transition={{
+                type: 'spring',
+                stiffness: 50,
+                mass: 0.1,
+                delay: 0.1
+              }}
+            >
+              <OverviewSection>
+                <motion.div animate="mounted" variants={variants}>
+                  <ContentWrap>
+                    <Padded vertical="5x">
+                      <OverviewSectionWrap
+                        variants={childVariants}
+                        initial={
+                          shouldAnimate() ? { opacity: 0, y: 50 } : false
+                        }
+                      >
+                        <OverviewContentWrap>
+                          <OverviewGrid>
                             <Spaced bottom="xs">
                               <OverviewKey>
-                                <Text order="meta">Overview</Text>
+                                <Text order="meta">Client</Text>
                               </OverviewKey>
-                              <OverviewValue>{description}</OverviewValue>{' '}
+                              <OverviewValue>{client}</OverviewValue>
                             </Spaced>
-                          </OverviewDescription>
-                        </Spaced>
-                        {coverImage && (
+                            <Spaced bottom="xs">
+                              <OverviewKey>
+                                <Text order="meta">Products</Text>
+                              </OverviewKey>
+                              <OverviewValue>{products}</OverviewValue>
+                            </Spaced>
+                          </OverviewGrid>
                           <Spaced bottom="2x">
-                            <ProjectImageWrap shadow={coverImage.shadow}>
-                              <ProjectImage image={coverImage} />
-                            </ProjectImageWrap>
+                            <OverviewDescription>
+                              <Spaced bottom="xs">
+                                <OverviewKey>
+                                  <Text order="meta">Overview</Text>
+                                </OverviewKey>
+                                <OverviewValue>{description}</OverviewValue>{' '}
+                              </Spaced>
+                            </OverviewDescription>
                           </Spaced>
-                        )}
-                        {link && link.url && link.title && (
-                          <CalloutLink
-                            url={link.url}
-                            title={link.title}
-                            description="View this project live on the web"
-                          />
-                        )}
-                      </OverviewContentWrap>
-                    </OverviewSectionWrap>
-                  </Padded>
-                </ContentWrap>
-              </motion.div>
-            </OverviewSection>
-
+                          {coverImage && (
+                            <Spaced bottom="2x">
+                              <ProjectImageWrap shadow={coverImage.shadow}>
+                                <ProjectImage image={coverImage} />
+                              </ProjectImageWrap>
+                            </Spaced>
+                          )}
+                          {link && link.url && link.title && (
+                            <CalloutLink
+                              url={link.url}
+                              title={link.title}
+                              description="View this project live on the web"
+                            />
+                          )}
+                        </OverviewContentWrap>
+                      </OverviewSectionWrap>
+                    </Padded>
+                  </ContentWrap>
+                </motion.div>
+              </OverviewSection>
+            </motion.div>
             {sections.length && (
               <section>
                 <motion.div animate="mounted" variants={variants}>
