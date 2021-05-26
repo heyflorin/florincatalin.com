@@ -195,8 +195,17 @@ export const ProjectTemplate = ({
           </ContentWrap>
         </Header>
         {isLocked && (
-          <>
-            <Spaced top="xl">
+          <motion.div
+            initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              type: 'spring',
+              stiffness: 50,
+              mass: 0.1,
+              delay: 0.23
+            }}
+          >
+            <Spaced vertical="xl">
               <SubscribeForm onSubmit={handleUnlock}>
                 <div>
                   <SubscribeFormContent>
@@ -263,7 +272,7 @@ export const ProjectTemplate = ({
                 </div>
               </SubscribeForm>
             </Spaced>
-          </>
+          </motion.div>
         )}
         {!isLocked && (
           <>
