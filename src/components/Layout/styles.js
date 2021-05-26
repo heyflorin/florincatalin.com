@@ -27,6 +27,9 @@ export const Main = styled.main`
   flex-direction: column;
   flex: 1;
   box-shadow: none;
+  & div {
+    overflow: hidden;
+  }
 `
 
 export const AnchoredHeading = styled(ArticleHeading)`
