@@ -223,7 +223,7 @@ export const SubscribeFormContent = styled.div`
   justify-content: center;
 `
 export const SubscribeInput = styled(Input)`
-  width: 20rem;
+  width: auto;
   max-width: 100%;
   background-color: var(--backgroundInverse);
   color: var(--textInverse);
