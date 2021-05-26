@@ -60,7 +60,7 @@ const WorkExcerpt = ({
 WorkExcerpt.propTypes = {
   link: PropTypes.string.isRequired,
   image: PropTypes.shape({
-    publicURL: PropTypes.string.isRequired,
+    publicURL: PropTypes.string,
     alt: PropTypes.string,
     title: PropTypes.string
   }),

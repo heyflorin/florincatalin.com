@@ -96,7 +96,7 @@ export const OverviewGrid = styled.div`
   }
 `
 
-export const OverviewKey = styled(Text)`
+export const OverviewKey = styled.div`
   grid-column: 1 / -1;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
@@ -108,7 +108,7 @@ export const OverviewKey = styled(Text)`
   }
 `
 
-export const OverviewValue = styled(Text)`
+export const OverviewValue = styled.div`
   grid-column: 1 / -1;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
@@ -125,7 +125,7 @@ export const OverviewValue = styled(Text)`
   }
 `
 
-export const OverviewDescription = styled(Text)`
+export const OverviewDescription = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-column: 1 / -1;

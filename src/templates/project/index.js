@@ -305,13 +305,17 @@ export const ProjectTemplate = ({
                               <OverviewKey>
                                 <Text order="meta">Client</Text>
                               </OverviewKey>
-                              <OverviewValue>{client}</OverviewValue>
+                              <OverviewValue>
+                                <Text order="body">{client}</Text>
+                              </OverviewValue>
                             </Spaced>
                             <Spaced bottom="xs">
                               <OverviewKey>
                                 <Text order="meta">Products</Text>
                               </OverviewKey>
-                              <OverviewValue>{products}</OverviewValue>
+                              <OverviewValue>
+                                <Text order="body">{products}</Text>
+                              </OverviewValue>
                             </Spaced>
                           </OverviewGrid>
                           <Spaced bottom="2x">
@@ -320,7 +324,9 @@ export const ProjectTemplate = ({
                                 <OverviewKey>
                                   <Text order="meta">Overview</Text>
                                 </OverviewKey>
-                                <OverviewValue>{description}</OverviewValue>{' '}
+                                <OverviewValue>
+                                  <Text order="body">{description}</Text>
+                                </OverviewValue>{' '}
                               </Spaced>
                             </OverviewDescription>
                           </Spaced>
@@ -458,7 +464,7 @@ ProjectTemplate.propTypes = {
     light: PropTypes.shape({
       publicURL: PropTypes.string.isRequired
     }).isRequired,
-    shadow: PropTypes.bool.isRequired,
+    shadow: PropTypes.bool,
     alt: PropTypes.string
   }).isRequired,
   sections: PropTypes.arrayOf(
@@ -484,7 +490,7 @@ ProjectTemplate.propTypes = {
         }),
         alt: PropTypes.string,
         caption: PropTypes.string,
-        shadow: PropTypes.bool.isRequired
+        shadow: PropTypes.bool
       })
     }).isRequired
   ).isRequired
@@ -524,7 +530,7 @@ Project.propTypes = {
           light: PropTypes.shape({
             publicURL: PropTypes.string.isRequired
           }).isRequired,
-          shadow: PropTypes.bool.isRequired,
+          shadow: PropTypes.bool,
           alt: PropTypes.string
         }).isRequired,
         sections: PropTypes.arrayOf(
@@ -550,7 +556,7 @@ Project.propTypes = {
               }),
               alt: PropTypes.string,
               caption: PropTypes.string,
-              shadow: PropTypes.bool.isRequired
+              shadow: PropTypes.bool
             })
           }).isRequired
         ).isRequired

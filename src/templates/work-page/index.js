@@ -220,7 +220,7 @@ WorkIndexPage.propTypes = {
               role: PropTypes.string.isRequired,
               client: PropTypes.string.isRequired,
               products: PropTypes.string.isRequired,
-              locked: PropTypes.string,
+              locked: PropTypes.boolean,
               description: PropTypes.string.isRequired,
               image: PropTypes.shape({
                 light: PropTypes.shape({

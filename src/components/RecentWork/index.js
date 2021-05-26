@@ -66,7 +66,7 @@ RecentWork.propTypes = {
               title: PropTypes.string.isRequired,
               description: PropTypes.string.isRequired,
               role: PropTypes.string.isRequired,
-              date: PropTypes.string.isRequired
+              date: PropTypes.string
             }).isRequired
           }).isRequired
         })
