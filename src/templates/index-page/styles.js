@@ -52,19 +52,21 @@ export const StacksWrap = styled(motion.div)`
   left: 25%;
   z-index: 1;
 
+  & > div {
+    @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+      opacity: 0.3;
+    }
+  }
   @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
     left: auto;
-    ${'' /* opacity: 0.3 !important; */}
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     left: 20%;
-    ${'' /* opacity: 0.5 !important; */}
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     left: 20%;
-    ${'' /* opacity: 0.5 !important; */}
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktopLarge}) {
