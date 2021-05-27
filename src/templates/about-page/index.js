@@ -132,14 +132,14 @@ export const AboutPageTemplate = ({
                     stroke: false,
                     strokeWidth: false,
                     className: 'topLeft normal transparent',
-                    translateXy: '-1.75rem'
+                    translateXy: '-1.25rem'
                   },
                   {
                     fill: '#ea7963',
                     stroke: false,
                     strokeWidth: false,
                     className: 'bottomRight normal transparent',
-                    translateXy: '1.75rem'
+                    translateXy: '1.25rem'
                   },
                   {
                     fill: '#004b60',
@@ -153,14 +153,14 @@ export const AboutPageTemplate = ({
                     stroke: '#09CADA',
                     strokeWidth: '2',
                     className: 'topLeft normal',
-                    translateXy: '-1.75rem'
+                    translateXy: '-1.25rem'
                   },
                   {
                     fill: 'none',
                     stroke: '#ea7963',
                     strokeWidth: '2',
                     className: 'bottomRight lighten',
-                    translateXy: '1.75rem'
+                    translateXy: '1.25rem'
                   }
                 ].map(i => (
                   <BioImageBorder
