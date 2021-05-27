@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import get from 'lodash/get'
 import kebabCase from 'lodash/kebabCase'
-import algoliasearch from 'algoliasearch/lite'
+// import algoliasearch from 'algoliasearch/lite'
 import {
   connectHighlight,
   connectHits,
@@ -30,10 +30,10 @@ import {
 } from './styles'
 import NotFound from '../../svgs/not-found.svg'
 
-const searchClient = algoliasearch(
-  process.env.GATSBY_ALGOLIA_APPLICATION_ID,
-  process.env.GATSBY_ALGOLIA_SEARCH_ONLY_API_KEY
-)
+// const searchClient = algoliasearch(
+//   process.env.GATSBY_ALGOLIA_APPLICATION_ID,
+//   process.env.GATSBY_ALGOLIA_SEARCH_ONLY_API_KEY
+// )
 
 const SearchBox = ({ currentRefinement, refine }) => {
   const searchRef = useRef()

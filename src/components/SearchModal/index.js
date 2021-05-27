@@ -167,7 +167,7 @@ const SearchModal = React.forwardRef(
                     </SearchHeader>
                   </Spaced>
                   <Suspense fallback={<div>Loading...</div>}>
-                    <Search />
+                    {/* <Search /> */}
                   </Suspense>
                 </SearchWrap>
               </motion.div>

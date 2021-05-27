@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const { createFilePath } = require('gatsby-source-filesystem')
 const { fmImagesToRelative } = require('gatsby-remark-relative-images')
-const algoliasearch = require('algoliasearch')
+// const algoliasearch = require('algoliasearch')
 const colors = require('./colors')
 
 exports.createPages = ({ actions, graphql }) => {
@@ -81,45 +81,45 @@ exports.createPages = ({ actions, graphql }) => {
     })
 
     // Algolia indexing
-    const client = algoliasearch(
-      process.env.GATSBY_ALGOLIA_APPLICATION_ID,
-      process.env.ALGOLIA_ADMIN_API_KEY
-    )
+    // const client = algoliasearch(
+    //   process.env.GATSBY_ALGOLIA_APPLICATION_ID,
+    //   process.env.ALGOLIA_ADMIN_API_KEY
+    // )
 
-    const postsIndex = client.initIndex('jh_posts')
-    postsIndex.setSettings({
-      attributesToHighlight: [
-        'frontmatter.description',
-        'frontmatter.tags',
-        'frontmatter.title'
-      ],
-      attributesToRetrieve: ['fields', 'frontmatter'],
-      ranking: [
-        'desc(frontmatter.date)',
-        'typo',
-        'geo',
-        'words',
-        'filters',
-        'proximity',
-        'attribute',
-        'exact',
-        'custom'
-      ],
-      searchableAttributes: [
-        'frontmatter.description',
-        'frontmatter.tags',
-        'frontmatter.title'
-      ]
-    })
+    // const postsIndex = client.initIndex('jh_posts')
+    // postsIndex.setSettings({
+    //   attributesToHighlight: [
+    //     'frontmatter.description',
+    //     'frontmatter.tags',
+    //     'frontmatter.title'
+    //   ],
+    //   attributesToRetrieve: ['fields', 'frontmatter'],
+    //   ranking: [
+    //     'desc(frontmatter.date)',
+    //     'typo',
+    //     'geo',
+    //     'words',
+    //     'filters',
+    //     'proximity',
+    //     'attribute',
+    //     'exact',
+    //     'custom'
+    //   ],
+    //   searchableAttributes: [
+    //     'frontmatter.description',
+    //     'frontmatter.tags',
+    //     'frontmatter.title'
+    //   ]
+    // })
 
-    const postObjects = posts
-      .filter(edge => edge.node.frontmatter.templateKey === 'blog-post')
-      .map(edge => ({
-        ...edge.node,
-        objectID: edge.node.id
-      }))
+    // const postObjects = posts
+    //   .filter(edge => edge.node.frontmatter.templateKey === 'blog-post')
+    //   .map(edge => ({
+    //     ...edge.node,
+    //     objectID: edge.node.id
+    //   }))
 
-    postsIndex.replaceAllObjects(postObjects)
+    // postsIndex.replaceAllObjects(postObjects)
   })
 }
 
