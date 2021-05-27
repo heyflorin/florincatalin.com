@@ -79,28 +79,6 @@ export default () => (
   <StaticQuery
     query={graphql`
       query RecentWorkQuery {
-        # allMdx(
-        #   limit: 5
-        #   sort: { order: DESC, fields: [frontmatter___date] }
-        #   filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
-        # ) {
-        #   edges {
-        #     node {
-        #       excerpt(pruneLength: 150)
-        #       id
-        #       fields {
-        #         slug
-        #       }
-        #       frontmatter {
-        #         title
-        #         description
-        #         templateKey
-        #         date
-        #         tags
-        #       }
-        #     }
-        #   }
-        # }
         allMdx(
           limit: 5
           sort: { order: DESC, fields: [frontmatter___date] }
