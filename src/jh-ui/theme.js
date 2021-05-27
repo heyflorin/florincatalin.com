@@ -10,8 +10,8 @@ export const colors = {
   blueDarker: 'hsl(210, 67%, 13%)',
   black: 'hsl(0, 0%, 0%)',
   white: 'hsl(0, 0%, 100%)',
-  red: 'hsl(196.6, 62.6%, 44.4%)',
-  redDark: 'hsl(196.6, 71.4%, 32.8%)'
+  red: 'hsl(189.7, 63.2%, 42.3%)',
+  redDark: 'hsl(186.7, 71.4%, 32.8%)'
 }
 
 export const elevations = {
