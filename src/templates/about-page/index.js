@@ -16,6 +16,7 @@ import website from '../../../website-config'
 import { shouldAnimate } from '../../helpers'
 import ContentWrap from '../../components/ContentWrap'
 import ProjectImage from '../../components/ProjectImage'
+import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 import {
   AboutContentWrap,
@@ -105,11 +106,11 @@ export const AboutPageTemplate = ({
   location,
   title,
   image,
-  bio,
   components,
   whatIUse,
   skillset,
-  sections
+  sections,
+  content
 }) => (
   <>
     <Seo
@@ -175,7 +176,9 @@ export const AboutPageTemplate = ({
               }}
             >
               <Spaced top="m">
-                <Text>{bio}</Text>
+                <Text>
+                  <MDXRenderer>{content}</MDXRenderer>
+                </Text>
               </Spaced>
             </motion.div>
           </BioText>
@@ -362,6 +365,7 @@ export const AboutPageTemplate = ({
 )
 
 AboutPageTemplate.propTypes = {
+  body: PropTypes.node.isRequired,
   location: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   image: PropTypes.shape({
@@ -369,7 +373,6 @@ AboutPageTemplate.propTypes = {
       fluid: PropTypes.object.isRequired
     }).isRequired
   }).isRequired,
-  bio: PropTypes.string.isRequired,
   sections: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -431,7 +434,6 @@ const AboutPage = ({ location, data: { mdx: post } }) => {
   const {
     title,
     bioimage,
-    bio,
     components,
     whatIUse,
     skillset,
@@ -443,11 +445,11 @@ const AboutPage = ({ location, data: { mdx: post } }) => {
       location={location}
       title={title}
       image={bioimage}
-      bio={bio}
       components={components}
       whatIUse={whatIUse}
       skillset={skillset}
       sections={sections}
+      content={post.body}
     />
   )
 }
@@ -456,6 +458,7 @@ AboutPage.propTypes = {
   location: PropTypes.object.isRequired,
   data: PropTypes.shape({
     mdx: PropTypes.shape({
+      body: PropTypes.node.isRequired,
       frontmatter: PropTypes.shape({
         title: PropTypes.string.isRequired,
         bioimage: PropTypes.shape({
@@ -463,7 +466,6 @@ AboutPage.propTypes = {
             fluid: PropTypes.object.isRequired
           }).isRequired
         }).isRequired,
-        bio: PropTypes.string.isRequired,
         sections: PropTypes.arrayOf(
           PropTypes.shape({
             title: PropTypes.string.isRequired,
@@ -529,6 +531,7 @@ export default AboutPage
 export const aboutPageQuery = graphql`
   query AboutPage {
     mdx(frontmatter: { templateKey: { eq: "about-page" } }) {
+      body
       frontmatter {
         title
         bioimage {
@@ -538,7 +541,6 @@ export const aboutPageQuery = graphql`
             }
           }
         }
-        bio
         components {
           title
           component {
