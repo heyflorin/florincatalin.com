@@ -108,14 +108,14 @@ const DesktopMenu = ({ location, shell }) => {
             <nav role="navigation">
               <ul>
                 <Spaced right="xxl">
-                  <MenuLinkWrap></MenuLinkWrap>
+                  {/* <MenuLinkWrap></MenuLinkWrap>
                   <MenuLinkWrap>
-                    {/* <MenuLink to="/blog" getProps={isActive}>
+                    <MenuLink to="/blog" getProps={isActive}>
                       <MenuLinkText order="body" element="span">
                         Articles
                       </MenuLinkText>
-                    </MenuLink> */}
-                  </MenuLinkWrap>
+                    </MenuLink>
+                  </MenuLinkWrap> */}
                   <MenuLinkWrap>
                     <MenuLink to="/about" getProps={isActive}>
                       <MenuLinkText order="body" element="span">
