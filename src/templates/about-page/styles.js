@@ -197,6 +197,10 @@ export const HeaderContentWrap = styled.div`
     grid-gap: 0 ${({ theme }) => theme.spacing.xxl};
   }
 
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-gap: 0 ${({ theme }) => theme.spacing['3x']};
+  }
+
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     grid-gap: 0 ${({ theme }) => theme.spacing['3x']};
   }
@@ -216,12 +220,14 @@ export const BioFigureWrap = styled.div`
   }
 `
 
-export const BioFigure = styled(motion.figure)`
+export const BioFigure = styled.figure`
   position: relative;
+  width: 90%;
+  margin: 0 auto;
 `
 
 export const BioImage = styled(Image)`
-  position: absolute;
+  position: absolute !important;
   top: 0;
   left: 0;
   width: 100%;
@@ -230,19 +236,42 @@ export const BioImage = styled(Image)`
   object-fit: cover;
 `
 
-export const BioImageBorder = styled.svg`
+export const BioImageTop = styled(Image)`
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  mix-blend-mode: lighten;
+`
+
+export const BioImageBorder = styled(motion.svg)`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 
-  &:first-of-type {
-    transform: translate(-0.75rem, -0.75rem);
+  ${'' /* &.topLeft {
+    transform: translate(-1.75rem, -1.75rem) !important;
   }
 
-  &:last-of-type {
-    transform: translate(0.75rem, 0.75rem);
+  &.bottomRight {
+    transform: translate(1.75rem, 1.75rem) !important;
+  } */}
+
+  &.hardLight {
+    mix-blend-mode: hard-light;
+  }
+
+  &.color {
+    mix-blend-mode: color;
+  }
+
+  &.colorDodge {
+    mix-blend-mode: color-dodge;
   }
 `
 

@@ -27,11 +27,29 @@ const Favicon = () => (
       color="#091c2f"
     /> */}
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#113151" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href={`${withPrefix('/')}img/apple-touch-icon.png`}
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href={`${withPrefix('/')}img/favicon-32x32.png`}
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href={`${withPrefix('/')}img/favicon-16x16.png`}
+    />
+    <link rel="manifest" href={`${withPrefix('/')}site.webmanifest`} />
+    <link
+      rel="mask-icon"
+      href={`${withPrefix('/')}img/safari-pinned-tab.svg`}
+      color="#113151"
+    />
     <meta name="msapplication-TileColor" content="#00aba9" />
     <meta name="theme-color" content="#ffffff" />
   </Helmet>

@@ -23,6 +23,7 @@ import {
   BioFigure,
   BioFigureWrap,
   BioImage,
+  BioImageTop,
   BioImageBorder,
   BioText,
   HeaderContentWrap,
@@ -124,27 +125,105 @@ export const AboutPageTemplate = ({
         <HeaderContentWrap>
           {image && (
             <BioFigureWrap>
-              <BioFigure
-                initial={shouldAnimate() ? { opacity: 0, scale: 0.75 } : false}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ type: 'spring', stiffness: 50, mass: 0.1 }}
-              >
-                <BioImage
-                  fluid={image.childImageSharp.fluid}
-                  alt="Florin Catalin"
-                />
-                {[1, 2].map(index => (
-                  <BioImageBorder key={index}>
+              <BioFigure>
+                <motion.div
+                  initial={
+                    shouldAnimate() ? { opacity: 0, scale: 0.75 } : false
+                  }
+                  animate={{
+                    opacity: 1,
+                    scale: 1
+                  }}
+                  transition={{ type: 'spring', stiffness: 50, mass: 0.1 }}
+                >
+                  <BioImage
+                    fluid={image.childImageSharp.fluid}
+                    alt="Florin Catalin"
+                  />
+                </motion.div>
+                {[
+                  {
+                    fill: '#016884',
+                    stroke: false,
+                    strokeWidth: false,
+                    className: 'topLeft hardLight',
+                    translateXy: '-1.75rem'
+                  },
+                  {
+                    fill: 'red',
+                    stroke: false,
+                    strokeWidth: false,
+                    className: 'bottomRight hardLight',
+                    translateXy: '1.75rem'
+                  },
+                  {
+                    fill: '#004b60',
+                    stroke: '#004b60',
+                    strokeWidth: '7',
+                    className: 'center color',
+                    translateXy: ''
+                  },
+                  {
+                    fill: 'none',
+                    stroke: '#016884',
+                    strokeWidth: '2',
+                    className: 'topLeft colorDodge',
+                    translateXy: '-1.75rem'
+                  },
+                  {
+                    fill: 'none',
+                    stroke: 'red',
+                    strokeWidth: '2',
+                    className: 'bottomRight color',
+                    translateXy: '1.75rem'
+                  }
+                ].map(i => (
+                  <BioImageBorder
+                    initial={
+                      shouldAnimate()
+                        ? { opacity: 0, scale: 0.75, x: 0, y: 0 }
+                        : false
+                    }
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      x: i.translateXy,
+                      y: i.translateXy
+                    }}
+                    transition={{
+                      type: 'spring',
+                      stiffness: 50,
+                      mass: 0.1,
+                      delay: 0.6
+                    }}
+                    key={i}
+                    className={i.className}
+                  >
                     <circle
                       cx="50%"
                       cy="50%"
                       r="49%"
-                      fill="none"
-                      stroke="var(--accent)"
-                      strokeWidth="1"
+                      fill={i.fill}
+                      stroke={i.stroke}
+                      strokeWidth={i.strokeWidth}
                     />
                   </BioImageBorder>
                 ))}
+                <motion.div
+                  initial={
+                    shouldAnimate() ? { opacity: 0, scale: 0.75 } : false
+                  }
+                  animate={{
+                    opacity: 1,
+                    scale: 1
+                  }}
+                  transition={{ type: 'spring', stiffness: 50, mass: 0.1 }}
+                >
+                  <BioImageTop
+                    fluid={image.childImageSharp.fluid}
+                    alt="Florin Catalin"
+                  />
+                </motion.div>
               </BioFigure>
             </BioFigureWrap>
           )}
