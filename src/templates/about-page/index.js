@@ -178,8 +178,7 @@ export const AboutPageTemplate = ({
                     transition={{
                       type: 'spring',
                       stiffness: 50,
-                      mass: 0.1,
-                      delay: 0.12
+                      mass: 0.1
                     }}
                     key={i}
                     className={i.className}
