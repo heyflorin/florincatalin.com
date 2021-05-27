@@ -22,7 +22,7 @@ const Footer = () => (
           Site Footer
         </ScreenReaderText>
         <Link to="/" aria-label="Home page" rel="home">
-          &copy; 2020–{currentYear} Florin Catalin
+          &copy; {currentYear} Florin Catalin
         </Link>
         <SocialLinksWrap aria-labelledby="social-links-label">
           <ScreenReaderText>
