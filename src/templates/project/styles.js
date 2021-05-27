@@ -108,6 +108,27 @@ export const OverviewKey = styled.div`
   }
 `
 
+export const ComponentKey = styled.div`
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto 16px auto;
+  align-items: center;
+  width: fit-content;
+  grid-gap: 5px;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-column: 1 / span 4;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    grid-column: 1 / span 3;
+  }
+`
+
+export const InfoIconWrap = styled.div`
+  color: var(--textLighter);
+`
+
 export const OverviewValue = styled.div`
   grid-column: 1 / -1;
 

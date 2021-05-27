@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X } from 'react-feather'
+import { Info } from 'react-feather'
+import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/animations/shift-away.css'
 import Spaced from '../../jh-ui/Spaced'
@@ -35,6 +37,8 @@ import {
   SectionImageCaptionWrap,
   OverviewContentWrap,
   OverviewKey,
+  ComponentKey,
+  InfoIconWrap,
   OverviewValue,
   OverviewDescription,
   OverviewGrid,
@@ -68,7 +72,6 @@ const childVariants = {
 export const ProjectTemplate = ({
   location,
   title,
-  component,
   description,
   role,
   client,
@@ -76,7 +79,8 @@ export const ProjectTemplate = ({
   link,
   coverImage,
   sections,
-  locked
+  locked,
+  components
 }) => {
   const { themeName, setTheme } = useContext(ThemeContext)
   const [isLocked, setLocked] = useState(null)
@@ -134,6 +138,9 @@ export const ProjectTemplate = ({
       setError('You entered an incorrect password, please try again.')
     }
   }
+
+  const getComponentDescription = component =>
+    components.find(c => c.name === component).description
 
   return (
     <>
@@ -369,11 +376,24 @@ export const ProjectTemplate = ({
                             <OverviewGrid>
                               <Spaced bottom="s">
                                 {section.component && (
-                                  <OverviewKey>
+                                  <ComponentKey>
                                     <Text order="meta">
                                       {section.component}
                                     </Text>
-                                  </OverviewKey>
+                                    <Tippy
+                                      key={index}
+                                      content={getComponentDescription(
+                                        section.component
+                                      )}
+                                      placement="top"
+                                      animation="shift-away"
+                                      theme="jh"
+                                    >
+                                      <InfoIconWrap>
+                                        <Info size="16" />
+                                      </InfoIconWrap>
+                                    </Tippy>
+                                  </ComponentKey>
                                 )}
                                 <SectionTitle level={2}>
                                   {section.title}
@@ -469,6 +489,12 @@ ProjectTemplate.propTypes = {
     shadow: PropTypes.bool,
     alt: PropTypes.string
   }).isRequired,
+  components: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired
+    })
+  ).isRequired,
   sections: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -498,7 +524,7 @@ ProjectTemplate.propTypes = {
   ).isRequired
 }
 
-const Project = ({ location, data: { mdx: post } }) => (
+const Project = ({ location, data: { mdx: post, componentData } }) => (
   <ProjectTemplate
     location={location}
     title={post.frontmatter.title}
@@ -510,6 +536,7 @@ const Project = ({ location, data: { mdx: post } }) => (
     coverImage={post.frontmatter.coverImage}
     sections={post.frontmatter.sections}
     locked={post.frontmatter.locked}
+    components={componentData.frontmatter.components.component}
   />
 )
 
@@ -562,6 +589,16 @@ Project.propTypes = {
             })
           }).isRequired
         ).isRequired
+      }).isRequired
+    }).isRequired,
+    componentData: PropTypes.shape({
+      frontmatter: PropTypes.shape({
+        components: PropTypes.shape({
+          components: PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            description: PropTypes.string.isRequired
+          })
+        })
       }).isRequired
     }).isRequired
   }).isRequired
@@ -638,6 +675,16 @@ export const pageQuery = graphql`
             alt
             caption
             shadow
+          }
+        }
+      }
+    }
+    componentData: mdx(frontmatter: { templateKey: { eq: "about-page" } }) {
+      frontmatter {
+        components {
+          component {
+            name
+            description
           }
         }
       }
