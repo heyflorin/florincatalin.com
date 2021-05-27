@@ -244,7 +244,7 @@ export const BioImageTop = styled(Image)`
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  mix-blend-mode: lighten;
+  ${'' /* mix-blend-mode: lighten; */}
 `
 
 export const BioImageBorder = styled(motion.svg)`
@@ -266,13 +266,21 @@ export const BioImageBorder = styled(motion.svg)`
     mix-blend-mode: hard-light;
   }
 
-  &.color {
-    mix-blend-mode: color;
+  &.screen {
+    mix-blend-mode: screen;
+  }
+
+  &.lighten {
+    mix-blend-mode: lighten;
   }
 
   &.colorDodge {
     mix-blend-mode: color-dodge;
   }
+
+  ${'' /* &.transparent {
+    opacity: 0.5;
+  } */}
 `
 
 export const BioText = styled.div`

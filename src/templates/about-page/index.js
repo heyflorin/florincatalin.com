@@ -126,55 +126,40 @@ export const AboutPageTemplate = ({
           {image && (
             <BioFigureWrap>
               <BioFigure>
-                <motion.div
-                  initial={
-                    shouldAnimate() ? { opacity: 0, scale: 0.75 } : false
-                  }
-                  animate={{
-                    opacity: 1,
-                    scale: 1
-                  }}
-                  transition={{ type: 'spring', stiffness: 50, mass: 0.1 }}
-                >
-                  <BioImage
-                    fluid={image.childImageSharp.fluid}
-                    alt="Florin Catalin"
-                  />
-                </motion.div>
                 {[
                   {
-                    fill: '#016884',
+                    fill: '#09CADA',
                     stroke: false,
                     strokeWidth: false,
-                    className: 'topLeft hardLight',
+                    className: 'topLeft normal transparent',
                     translateXy: '-1.75rem'
                   },
                   {
-                    fill: 'red',
+                    fill: '#ea7963',
                     stroke: false,
                     strokeWidth: false,
-                    className: 'bottomRight hardLight',
+                    className: 'bottomRight normal transparent',
                     translateXy: '1.75rem'
                   },
                   {
                     fill: '#004b60',
                     stroke: '#004b60',
                     strokeWidth: '7',
-                    className: 'center color',
+                    className: 'center normal',
                     translateXy: ''
                   },
                   {
                     fill: 'none',
-                    stroke: '#016884',
+                    stroke: '#09CADA',
                     strokeWidth: '2',
-                    className: 'topLeft colorDodge',
+                    className: 'topLeft normal',
                     translateXy: '-1.75rem'
                   },
                   {
                     fill: 'none',
-                    stroke: 'red',
+                    stroke: '#ea7963',
                     strokeWidth: '2',
-                    className: 'bottomRight color',
+                    className: 'bottomRight lighten',
                     translateXy: '1.75rem'
                   }
                 ].map(i => (
@@ -194,7 +179,7 @@ export const AboutPageTemplate = ({
                       type: 'spring',
                       stiffness: 50,
                       mass: 0.1,
-                      delay: 0.6
+                      delay: 0.12
                     }}
                     key={i}
                     className={i.className}
@@ -211,13 +196,20 @@ export const AboutPageTemplate = ({
                 ))}
                 <motion.div
                   initial={
-                    shouldAnimate() ? { opacity: 0, scale: 0.75 } : false
+                    shouldAnimate()
+                      ? { opacity: 0, scale: 0.75, mixBlendMode: 'normal' }
+                      : false
                   }
                   animate={{
                     opacity: 1,
-                    scale: 1
+                    scale: 1,
+                    mixBlendMode: 'lighten'
                   }}
-                  transition={{ type: 'spring', stiffness: 50, mass: 0.1 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 50,
+                    mass: 0.1
+                  }}
                 >
                   <BioImageTop
                     fluid={image.childImageSharp.fluid}
