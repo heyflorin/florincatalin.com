@@ -197,7 +197,11 @@ export const AboutPageTemplate = ({
                 <motion.div
                   initial={
                     shouldAnimate()
-                      ? { opacity: 0, scale: 0.75, mixBlendMode: 'normal' }
+                      ? {
+                          opacity: 0,
+                          scale: 0.75,
+                          mixBlendMode: 'normal'
+                        }
                       : false
                   }
                   animate={{

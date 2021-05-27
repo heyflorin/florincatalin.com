@@ -244,7 +244,8 @@ export const BioImageTop = styled(Image)`
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  ${'' /* mix-blend-mode: lighten; */}
+  mix-blend-mode: lighten;
+  filter: grayscale(1);
 `
 
 export const BioImageBorder = styled(motion.svg)`
