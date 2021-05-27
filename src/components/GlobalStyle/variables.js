@@ -9,14 +9,14 @@ export const lightValues = css`
   --textAlertInfo: hsl(210, 15%, 60%);
   --textAlertDanger: hsl(5, 66%, 56%);
   --backgroundPrimary: ${({ theme }) => theme.colors.white};
-  --backgroundSecondary: hsl(210, 15%, 97.5%);
-  --backgroundTertiary: hsl(210, 15%, 92.5%);
+  --backgroundSecondary: hsl(190, 15%, 97.5%);
+  --backgroundTertiary: hsl(190, 15%, 92.5%);
   --backgroundInverse: ${({ theme }) => theme.colors.blueDarkest};
   --backgroundElevatedPrimary: '';
   --backgroundElevatedSecondary: ${({ theme }) => theme.colors.white};
   --backgroundElevatedInverse: ${({ theme }) => theme.colors.blueDarker};
   --backgroundBody: ${({ theme }) => theme.colors.blueDarkest};
-  --backgroundSubscribeBanner: hsl(210, 67%, 9%);
+  --backgroundSubscribeBanner: hsl(190, 67%, 9%);
   --backgroundCode: hsl(210, 15%, 97%);
   --backgroundInlineCode: hsl(210, 15%, 97%);
   --backgroundAlertInfo: hsl(210, 15%, 60%, 15%);

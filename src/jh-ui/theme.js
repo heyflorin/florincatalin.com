@@ -6,12 +6,12 @@ export const beziers = {
 }
 
 export const colors = {
-  blueDarkest: 'hsl(210, 67%, 11%)',
-  blueDarker: 'hsl(210, 67%, 13%)',
+  blueDarkest: 'hsl(190, 67%, 11%)',
+  blueDarker: 'hsl(190, 67%, 13%)',
   black: 'hsl(0, 0%, 0%)',
   white: 'hsl(0, 0%, 100%)',
-  red: 'hsl(189.7, 63.2%, 42.3%)',
-  redDark: 'hsl(186.7, 71.4%, 32.8%)'
+  red: 'hsl(190, 63.2%, 42.3%)',
+  redDark: 'hsl(190, 71.4%, 32.8%)'
 }
 
 export const elevations = {
