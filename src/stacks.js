@@ -5,12 +5,12 @@ import { useSprings, a } from '@react-spring/three'
 
 const number = 15
 const colors = [
-  '#186e8f',
-  '#1c7ba0',
-  '#2c87aa',
-  '#359ec7',
-  '#53b3d9',
-  '#6ec5e8'
+  '#18838f',
+  '#1d93a1',
+  '#2c9eab',
+  '#36b8c7',
+  '#52cbd9',
+  '#6ddce8'
 ]
 const random = i => {
   const r = Math.random()
