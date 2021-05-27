@@ -365,7 +365,7 @@ export const AboutPageTemplate = ({
 )
 
 AboutPageTemplate.propTypes = {
-  body: PropTypes.node.isRequired,
+  content: PropTypes.node.isRequired,
   location: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   image: PropTypes.shape({
