@@ -167,7 +167,7 @@ const DesktopMenu = ({ location, shell }) => {
               order="secondary"
               element="a"
               // href="#subscribe"
-              href="mailto:flo@florincatalin.com"
+              href="mailto:florin@catalin.io"
               onClick={handleSubscribeClick}
             >
               Contact

@@ -378,7 +378,7 @@ const ResumePageTemplate = ({
                       <Button
                         order="accent"
                         element="a"
-                        href="mailto:flo@florincatalin.com"
+                        href="mailto:florin@catalin.io"
                       >
                         Contact me
                       </Button>
