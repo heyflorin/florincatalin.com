@@ -7,7 +7,7 @@ import ContentWrap from '../../components/ContentWrap/'
 import Heading from '../../jh-ui/Heading'
 
 export const AboutSection = styled.section`
-  background-color: var(--backgroundSecondary);
+  background-color: var(--backgroundPrimary);
 `
 
 export const Section = styled(motion.section)``
@@ -297,7 +297,7 @@ export const BioText = styled.div`
 `
 
 export const ComponentsWrap = styled.section`
-  background-color: var(--backgroundPrimary);
+  background-color: var(--backgroundSecondary);
 `
 
 export const ComponentWrap = styled(motion.ul)`

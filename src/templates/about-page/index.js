@@ -259,54 +259,6 @@ export const AboutPageTemplate = ({
         </HeaderContentWrap>
       </AboutContentWrap>
     </HeaderWrap>
-    {sections.length && (
-      <AboutSection>
-        <motion.div animate="mounted" variants={variants}>
-          <ContentWrap>
-            {sections.map((section, index) => (
-              <Padded key={index} vertical="5x">
-                <Section
-                  variants={childVariants}
-                  initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
-                >
-                  <SectionContentWrap>
-                    <OverviewGrid>
-                      <Spaced bottom="s">
-                        {section.component && (
-                          <OverviewKey>
-                            <Text order="meta">{section.component}</Text>
-                          </OverviewKey>
-                        )}
-                        <SectionTitle level={2}>{section.title}</SectionTitle>
-                      </Spaced>
-                    </OverviewGrid>
-                    <SectionDescription>
-                      {section.description}
-                    </SectionDescription>
-                    {section.image && (
-                      <>
-                        <SectionImageWrap shadow={section.image.shadow}>
-                          <ProjectImage image={section.image} />
-                        </SectionImageWrap>
-                        {section.image.caption && (
-                          <SectionImageCaptionWrap>
-                            <Spaced top="s">
-                              <Text order="caption" element="figcaption">
-                                {section.image.caption}
-                              </Text>
-                            </Spaced>
-                          </SectionImageCaptionWrap>
-                        )}
-                      </>
-                    )}
-                  </SectionContentWrap>
-                </Section>
-              </Padded>
-            ))}
-          </ContentWrap>
-        </motion.div>
-      </AboutSection>
-    )}
     {components.component.length && (
       <ComponentsWrap aria-labelledby="components-label">
         <motion.div
@@ -359,7 +311,54 @@ export const AboutPageTemplate = ({
         </motion.div>
       </ComponentsWrap>
     )}
-
+    {sections.length && (
+      <AboutSection>
+        <motion.div animate="mounted" variants={variants}>
+          <ContentWrap>
+            {sections.map((section, index) => (
+              <Padded key={index} vertical="5x">
+                <Section
+                  variants={childVariants}
+                  initial={shouldAnimate() ? { opacity: 0, y: 50 } : false}
+                >
+                  <SectionContentWrap>
+                    <OverviewGrid>
+                      <Spaced bottom="s">
+                        {section.component && (
+                          <OverviewKey>
+                            <Text order="meta">{section.component}</Text>
+                          </OverviewKey>
+                        )}
+                        <SectionTitle level={2}>{section.title}</SectionTitle>
+                      </Spaced>
+                    </OverviewGrid>
+                    <SectionDescription>
+                      {section.description}
+                    </SectionDescription>
+                    {section.image && (
+                      <>
+                        <SectionImageWrap shadow={section.image.shadow}>
+                          <ProjectImage image={section.image} />
+                        </SectionImageWrap>
+                        {section.image.caption && (
+                          <SectionImageCaptionWrap>
+                            <Spaced top="s">
+                              <Text order="caption" element="figcaption">
+                                {section.image.caption}
+                              </Text>
+                            </Spaced>
+                          </SectionImageCaptionWrap>
+                        )}
+                      </>
+                    )}
+                  </SectionContentWrap>
+                </Section>
+              </Padded>
+            ))}
+          </ContentWrap>
+        </motion.div>
+      </AboutSection>
+    )}
     {whatIUse.usages.length && (
       <UsesWrap id="uses" aria-labelledby="uses-label">
         <motion.div
