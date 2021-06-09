@@ -30,6 +30,22 @@ const data = new Array(number).fill().map(() => {
 })
 
 function Content() {
+  const [timerId, setTimerId] = useState(undefined)
+
+  const shuffle = delay => {
+    if (timerId) {
+      return
+    }
+    set(i => ({
+      ...random(i)
+    }))
+    setTimerId(
+      setTimeout(() => {
+        setTimerId(undefined)
+      }, delay)
+    )
+  }
+
   const [springs, set] = useSprings(number, i => ({
     from: random(i),
     ...random(i),
@@ -42,11 +58,7 @@ function Content() {
       {...springs[index]}
       castShadow
       receiveShadow
-      onPointerOver={event =>
-        set(i => ({
-          ...random(i)
-        }))
-      }
+      onPointerOver={event => shuffle(650)}
     >
       <boxBufferGeometry attach="geometry" args={d.args} />
       <a.meshStandardMaterial
@@ -54,7 +66,6 @@ function Content() {
         color={springs[index].color}
         roughness={0.75}
         metalness={0.5}
-        wireframe
       />
     </a.mesh>
   ))
