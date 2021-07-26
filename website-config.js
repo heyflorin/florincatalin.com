@@ -17,6 +17,6 @@ module.exports = {
   themeColor: '#ffffff',
   backgroundColor: '#ffffff',
 
-  twitterUsername: '@orincatali', // Twitter Username
+  twitterUsername: '@heyflorin', // Twitter Username
   facebookAppId: '285210128750934' // Facebook App Id
 }

@@ -4,7 +4,7 @@
   "description": "Version 1 of Florin Catalin's personal website.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/orincatali/florincatalin.com.git"
+    "url": "https://github.com/heyflorin/florincatalin.com.git"
   },
   "homepage": "https://www.florincatalin.com",
   "author": "Florin Catalin <florin@catalin.io> (www.florincatalin.com)",

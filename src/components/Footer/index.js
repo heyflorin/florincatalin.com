@@ -32,7 +32,7 @@ const Footer = () => (
             <Spaced left="s">
               <Link
                 as="a"
-                href="https://twitter.com/orincatali/"
+                href="https://twitter.com/heyflorin/"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Twitter"
@@ -42,7 +42,7 @@ const Footer = () => (
               </Link>
               <Link
                 as="a"
-                href="https://github.com/orincatali/"
+                href="https://github.com/heyflorin/"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Github"
@@ -62,7 +62,7 @@ const Footer = () => (
               </Link> */}
               <Link
                 as="a"
-                href="https://www.linkedin.com/in/florinm/"
+                href="https://www.linkedin.com/in/heyflorin/"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="LinkedIn"
@@ -72,7 +72,7 @@ const Footer = () => (
               </Link>
               <Link
                 as="a"
-                href="https://instagram.com/orincatali/"
+                href="https://instagram.com/heyflorin/"
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Instagram"

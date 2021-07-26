@@ -66,6 +66,7 @@ function Content() {
         color={springs[index].color}
         roughness={0.75}
         metalness={0.5}
+        wireframe
       />
     </a.mesh>
   ))
