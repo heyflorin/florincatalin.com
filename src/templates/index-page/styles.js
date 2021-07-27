@@ -49,7 +49,7 @@ export const StacksWrap = styled(motion.div)`
   overflow: hidden;
   position: absolute;
   top: 0;
-  left: 25%;
+  left: 20%;
   z-index: 1;
 
   & > div {
@@ -58,7 +58,7 @@ export const StacksWrap = styled(motion.div)`
     }
   }
   @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    left: auto;
+    left: 20%;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
@@ -66,7 +66,7 @@ export const StacksWrap = styled(motion.div)`
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    left: 20%;
+    left: 10%;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktopLarge}) {

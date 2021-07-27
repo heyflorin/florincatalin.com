@@ -6,18 +6,18 @@ export const Root = styled.span`
   border-radius: 20px;
   background-color: var(--backgroundSecondary);
   font-family: ${({ theme }) => theme.fonts.sansSerif};
-  font-size: ${({ theme }) => theme.fontSizes.s.mobile};
+  font-size: calc(${({ theme }) => theme.fontSizes.s.mobile} - 0.12rem);
   font-weight: 500;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--textLighter);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    font-size: ${({ theme }) => theme.fontSizes.s.tablet};
+    font-size: calc(${({ theme }) => theme.fontSizes.s.tablet} - 0.12rem);
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    font-size: ${({ theme }) => theme.fontSizes.s.desktop};
+    font-size: calc(${({ theme }) => theme.fontSizes.s.desktop} - 0.12rem);
   }
 
   &:hover,
