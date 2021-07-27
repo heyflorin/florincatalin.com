@@ -58,19 +58,19 @@ export const StacksWrap = styled(motion.div)`
     }
   }
   @media (min-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    left: 20%;
+    left: 0;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    left: 20%;
+    left: 35%;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    left: 10%;
+    left: 21%;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktopLarge}) {
-    ${'' /* left: 20%; */}
+    left: 10%;
   }
 `
 
