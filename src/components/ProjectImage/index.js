@@ -14,28 +14,23 @@ const ProjectImage = ({ image, ...props }) => {
     <figure {...props} height="100%">
       {themeName &&
         (image.animation ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: `
-        <video
-          loop
-          muted
-          autoplay
-          playsinline
-          preload="metadata"
-          alt="${image.alt}"
-          width="100%"
-          crossOrigin="anonymous"
-        >
-        <source src="${image.animation.publicURL}" type="video/mp4" />
-        <img
-              src="${image.animation.publicURL}"
-              alt="${image.alt}"
-              width="100%"
+          <video
+            autoPlay
+            muted
+            loop
+            muted
+            playsInline
+            alt={image.alt}
+            width="100%"
+            crossOrigin="anonymous"
+          >
+            <source src={image.animation.publicURL} type="video/mp4" />
+            <img
+              src={image.animation.publicURL}
+              alt={image.alt}
+              width={'100%'}
             />
-        </video>`
-            }}
-          />
+          </video>
         ) : (
           <Image
             alt={image.alt || ''}
