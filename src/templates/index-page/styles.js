@@ -70,7 +70,7 @@ export const StacksWrap = styled(motion.div)`
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktopLarge}) {
-    left: 10%;
+    left: 12%;
   }
 `
 
