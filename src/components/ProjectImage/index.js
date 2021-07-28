@@ -15,7 +15,6 @@ const ProjectImage = ({ image, ...props }) => {
       {themeName &&
         (image.animation ? (
           <div
-            style={{ borderRadius: '12px' }}
             dangerouslySetInnerHTML={{
               __html: `
         <video
@@ -24,6 +23,7 @@ const ProjectImage = ({ image, ...props }) => {
           autoplay
           playsinline
           preload="metadata"
+          style="border-radius:12px;"
           alt="${image.alt}"
           width="100%"
           crossorigin="anonymous"

@@ -1,3 +1,5 @@
+// Not used at this time, using no cache method in gatsby-config.js instead of this.
+// https://betterprogramming.pub/how-to-get-videos-to-work-in-safari-with-gatsby-and-service-workers-9e1f099249ac
 // Add Range Request support to fetching videos from cache
 workbox.routing.registerRoute(
   /.*\.mp4/,
