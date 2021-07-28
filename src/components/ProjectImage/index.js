@@ -25,6 +25,7 @@ const ProjectImage = ({ image, ...props }) => {
           preload="metadata"
           alt="${image.alt}"
           width="100%"
+          crossOrigin="anonymous"
         >
         <source src="${image.animation.publicURL}" type="video/mp4" />
         <img

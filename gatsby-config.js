@@ -182,7 +182,12 @@ module.exports = {
         icon: website.favicon
       }
     },
-    'gatsby-plugin-offline',
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        appendScript: require.resolve(`./sw-range-request-handler.js`)
+      }
+    },
     'gatsby-plugin-netlify' // make sure to keep it last in the array
   ]
 }
