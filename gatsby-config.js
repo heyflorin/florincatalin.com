@@ -185,7 +185,14 @@ module.exports = {
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        appendScript: require.resolve(`./sw-range-request-handler.js`)
+        workboxConfig: {
+          runtimeCaching: [
+            {
+              urlPattern: /.*\.mp4/,
+              handler: `NetworkOnly`
+            }
+          ]
+        }
       }
     },
     'gatsby-plugin-netlify' // make sure to keep it last in the array
